@@ -1,123 +1,140 @@
-# 🏥 Healthcare IT & Cardiology Informatics Learning Portfolio
 
-> **Transforming cardiovascular quality expertise into Epic Cupid consulting excellence**
-
-## 🎯 About This Repository
-
-This repository documents my structured, self-directed learning journey from cardiovascular quality improvement professional to Epic Cupid Consultant, specializing in the Middle East and Africa (MEA) region.
-
-**What You'll Find Here:**
-- 📚 50+ comprehensive lessons covering Epic Cupid fundamentals to advanced workflows
-- 🎨 100+ original infographics demonstrating cardiology informatics concepts
-- 🔄 Real-time documentation of learning progression and insights
-- 🛠️ Technical process maps, integration architectures, and workflow diagrams
-- 💡 Quality improvement perspectives applied to healthcare IT implementations
-
-
-> All datasets in this profile are synthetic or de-identified and intended for educational, portfolio, and demonstration purposes only.
----
-
-# Epic Cupid Learning Journey
-
-## About This Repository
-Personal learning documentation for Epic Cupid Consultant pathway by Tahlil A. Warsame
-
-## Learning Objectives
-- Master Epic Cupid functionality and workflows
-- Understand cardiology informatics integration points
-- Prepare for Epic Cupid certification
-- Build consulting skills for healthcare IT implementations
-
-## Repository Structure
-[Explain your directory organization]
-
-## Progress Tracker
-- ✅ Lesson 1.1: What is Epic Cupid (Completed: Nov 11, 2025)
-- ✅ Lesson 1.2: Epic Ecosystem Orientation (Completed: Nov 11, 2025)
-- 🔄 Lesson 1.3: [In Progress]
-
-## Skills Demonstrated
-- Healthcare IT workflows
-- Clinical informatics
-- Process mapping
-- Technical documentation
-- System integration concepts
-
-## Disclaimer
-This repository contains my personal learning notes and self-created educational materials. No proprietary Epic content, client data, or confidential information is included.
-
-
-
-
-Technical Portfolio:
-GitHub: github.com/[Twarsame]/epic-cupid-learning-journey
-- Self-directed Epic Cupid learning documentation with 50+ lessons
-- Created 100+ original infographics demonstrating cardiology workflow concepts
-- Technical documentation showcasing EHR integration and healthcare IT knowledge
+# Healthcare-IT-Cardiology-Informatics
+Transforming cardiovascular care through clinical informatics, combining 22 years of hands-on cardiovascular imaging experience with data-driven quality improvement. On a mission to bridge clinical expertise and healthcare technology to enhance patient outcomes across the Middle East and Africa.
 
 ---
-## eady to Launch: Your GitHub Repository Setup
 
-### 🎯 GitHub Handle Placement Examples
+## 🎯 Why Epic Cupid? My Unique Value Proposition
 
-Replace `[Twarsame]` with your actual GitHub username in these locations:
+### Clinical Foundation
+- **22 years** cardiovascular imaging experience (echo, cath lab, nuclear, vascular)
+- **Deep cardiology workflow expertise** from frontline to leadership
+- **Quality champion**: CPHQ, CHDA, Six Sigma Black Belt certifications
+- **Regulatory mastery**: NCDR registries, CMS quality measures, accreditation standards
 
-    
-- **3. Clone Instructions**
-    
-    
-- **4. LinkedIn Featured Section**
-    
-    **Title:** Epic Cupid Learning Portfolio
-    
-    **Description:** Self-directed learning documentation showcasing my journey toward Epic Cupid Consultant certification, featuring 50+ lessons, 100+ original infographics, and comprehensive cardiology informatics workflows.
-    
-    **Link:** `https://github.com/[your-username]/Healthcare-IT-Cardiology-Informatics`
-    
-- **5. Resume Technical Projects Section**
-    
-## 📫 Let's Connect
-<div align="left">
-  <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/linkedin/default.svg" width="52" height="40" alt="linkedin logo"  />
-  <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/twitter/default.svg" width="52" height="40" alt="twitter logo"  />
-  <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/discord/default.svg" width="52" height="40" alt="discord logo"  />
-  <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/youtube/default.svg" width="52" height="40" alt="youtube logo"  />
-</div>
+### Technical Capabilities
+- Healthcare data analytics and business intelligence
+- Process optimization and lean methodologies
+- Cross-functional team leadership and change management
+- Technical documentation and training development
 
-###
+### Regional Expertise
+- **MEA-focused**: Understanding of regional healthcare systems, regulations, and cultural nuances
+- Multilingual capabilities and cultural competency
+- Experience with diverse healthcare delivery models
 
-![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=Twarsame)
+---
 
-- 💼 **LinkedIn**: [linkedin.com/in/tahlilwarsame](https://www.linkedin.com/in/tahlilwarsame/)
-- 📧 **Email**: tahlilw@gmail.com
-- 📊 **Portfolio**: [kaggle.com/twarsame](https://www.kaggle.com/twarsame)
+## 📚 Self-Directed Epic Cupid Learning Journey
 
-💬 **Ask me about**: Cardiovascular workflow optimization, clinical quality improvement, healthcare data analytics, or my Epic Cupid journey
+### My Approach
+I'm pursuing Epic Cupid expertise through structured self-study, combining:
+- Epic's publicly available resources and community knowledge
+- Cardiovascular informatics literature and best practices
+- Hands-on documentation via original infographics and process maps
+- Real-world application to cardiology workflows
 
+### Why Self-Taught?
+- **Demonstrates initiative and passion** for the field
+- **Proves ability to master complex systems independently**
+- **Shows commitment** despite geographic/access barriers
+- **Builds foundation** for formal Epic certification when opportunity arises
 
+---
 
-## 📊 Learning Progress
+## 🎓 Certification Strategy
 
-| Module | Lessons Completed | Infographics Created | Status |
-|--------|------------------|---------------------|--------|
+### Current Certifications
+- **CPHQ** (Certified Professional in Healthcare Quality)
+- **CHDA** (Certified Health Data Analyst)
+- **SSBB** (Six Sigma Black Belt)
+- **MSc** in Healthcare Management
+
+### Target Certifications
+
+| Certification | Strategic Value | Timeline |
+|---------------|----------------|----------|
+| **Epic Cupid Proficiency** | **TOP PRIORITY** - Required for Epic roles | When access available |
+| **CPHIMS** | Fills IT/implementation gap, highest prestige in Epic circles | 12-18 months |
+| **Additional Epic Modules** | Beaker (lab integration), Radiant (imaging workflow) | Post-Cupid cert |
+
+### Why CPHIMS Next?
+With CPHQ + CHDA already achieved, CPHIMS would create a **"triple threat"** covering:
+1. **Quality** (CPHQ) - Clinical excellence and regulatory compliance
+2. **Analytics** (CHDA) - Data-driven insights and reporting
+3. **IT Systems** (CPHIMS) - Implementation and optimization
+
+This combination positions me for senior Epic Cupid consultant roles ($115K-$150K range) and distinguishes me in the competitive MEA market.
+
+---
+
+## 🎯 Epic Cupid Consultant Focus Areas
+
+### 1. Cardiovascular Workflow Optimization
+- Design streamlined Epic Cupid workflows for:
+  - Echocardiography (TTE, TEE, stress echo)
+  - Cardiac catheterization and interventional procedures
+  - Nuclear cardiology (SPECT, PET)
+  - Vascular studies (carotid, peripheral)
+- Align workflows with ASE/ACC/AHA clinical guidelines
+- Optimize order sets, documentation templates, and clinical decision support
+
+### 2. NCDR Quality Reporting & Registry Integration
+- Configure structured data capture within Cupid for:
+  - LAAO Registry
+  - AFib Ablation Registry
+  - EP Device Implant Registry
+  - Cath PCI Registry
+- Enable automated registry submissions
+- Support CMS quality measure reporting (MIPS, MACRA)
+- Build quality dashboards and performance monitoring
+
+### 3. Capacity & Access Analytics
+- Leverage Compass Rose and Cogito analytics to:
+  - Monitor cardiovascular service line utilization
+  - Optimize scheduling templates and resource allocation
+  - Reduce patient wait times and no-show rates
+  - Identify throughput bottlenecks
+- Build executive dashboards for operational decision-making
+- Support value-based care initiatives
+
+### 4. MEA Regional Implementations
+- Lead Epic Cupid deployments across Middle East and Africa
+- Address region-specific challenges:
+  - Regulatory requirements (MOH approvals, data sovereignty)
+  - Multilingual support (Arabic, French, English)
+  - Cultural workflow considerations
+  - Infrastructure constraints
+- Build relationships with local stakeholders and vendors
+
+---
+
+## 📊 GitHub Learning Portfolio
+
+### Repository Purpose
+Document my self-directed Epic Cupid learning journey through:
+- **50+ structured lessons** (fundamentals to advanced workflows)
+- **100+ original infographics** (cardiology informatics concepts)
+- **Technical documentation** (process maps, integration architectures)
+- **Real-time learning progression** and reflective insights
+
+### Learning Methodology
+1. **Structured self-study** following Epic's recommended pathways
+2. **Visual documentation** via original infographics
+3. **Reflective practice** documenting insights per lesson
+4. **Real-world application** to cardiology workflows
+5. **Quality integration** using Six Sigma frameworks
+
+### Current Progress
+
+| Module | Lessons | Infographics | Status |
+|--------|---------|--------------|--------|
 | Fundamentals | 5/10 | 15 | 🔄 In Progress |
 | Core Functionality | 0/15 | 0 | ⏳ Planned |
 | Advanced Workflows | 0/12 | 0 | ⏳ Planned |
 | Integration | 0/8 | 0 | ⏳ Planned |
 
-**Total Commits:** [Updates automatically]  
-**Last Updated:** [Current date]
-
-## 🎓 Learning Methodology
-
-1. **Structured Self-Study:** Following Epic's recommended learning pathways
-2. **Visual Documentation:** Creating original infographics for each concept
-3. **Reflective Practice:** Documenting insights and questions after each lesson
-4. **Real-World Application:** Connecting concepts to actual cardiology workflows
-5. **Quality Integration:** Applying Six Sigma and quality improvement frameworks
-
-## 🚀 Skills Demonstrated
-
+### Skills Demonstrated
 - Healthcare IT system architecture
 - Clinical workflow optimization
 - Technical documentation and visualization
@@ -125,62 +142,135 @@ Replace `[Twarsame]` with your actual GitHub username in these locations:
 - Data governance and analytics
 - Cross-functional stakeholder management
 
-## 💼 Professional Applications
+---
 
-This portfolio demonstrates competencies essential for Epic Cupid consulting:
-- Deep understanding of cardiology clinical workflows
-- Ability to translate clinical needs into technical solutions
-- Strong documentation and communication skills
-- Systems thinking and integration expertise
-- Commitment to continuous learning and professional development
+## 💼 Epic Cupid Consulting Competencies
 
-## 📈 Why This Matters
+### Clinical Domain Expertise
+- ✅ Deep understanding of cardiovascular workflows and clinical needs
+- ✅ Ability to translate clinical requirements into technical solutions
+- ✅ Knowledge of quality metrics and regulatory requirements
+- ✅ Experience with NCDR registries and accreditation standards
 
-Healthcare IT consultants must bridge clinical practice and technology. This portfolio showcases:
-- **Clinical Credibility:** 22 years cardiovascular experience
-- **Technical Aptitude:** Self-taught Epic architecture and workflows
-- **Communication Skills:** Clear visual and written explanations
-- **Problem-Solving:** Quality improvement mindset applied to IT implementations
-- **Dedication:** Consistent, documented learning progression
+### Technical Skills
+- ✅ Healthcare IT system architecture and integration
+- ✅ Data analytics and business intelligence
+- ✅ Process mapping and workflow design
+- ✅ Technical documentation and training development
 
-## 🔗 Connect With Me
+### Soft Skills
+- ✅ Strong written and verbal communication
+- ✅ Cross-functional stakeholder management
+- ✅ Change management and user adoption strategies
+- ✅ Project management and implementation leadership
 
-- **LinkedIn:** [Your LinkedIn Profile URL]
-- **Email:** [Your Professional Email]
-- **Location:** MEA Region
-- **Availability:** Open to Epic Cupid Consultant opportunities
-
-## ⚖️ Legal & Ethical Disclaimer
-
-- All content is original work created for educational purposes
-- No proprietary Epic Systems content is included
-- No Protected Health Information (PHI) or confidential client data
-- No screenshots or materials from Epic training environments
-- All infographics and diagrams are self-created
-
-## 📜 License
-
-This work is licensed under [MIT License / Creative Commons BY-SA 4.0]
-Free to use for educational purposes with attribution.
-
-## 🙏 Acknowledgments
-
-- Epic Systems for creating transformative healthcare technology
-- Healthcare IT community for shared knowledge and resources
-- Quality improvement methodologies that inform my approach
+### Continuous Learning
+- ✅ Self-directed learning and professional development
+- ✅ Staying current with Epic updates and industry trends
+- ✅ Building professional network in Epic community
 
 ---
 
-**⭐ Star this repository if you find it valuable!**  
-**🔔 Watch for updates as I progress through my Epic Cupid journey**
+## 🔗 Connect With Me
 
-*Last Updated: [Auto-generate date]*
-*Repository Views: [GitHub insights]*
+- 💼 **LinkedIn:** [linkedin.com/in/tahlilwarsame](https://www.linkedin.com/in/tahlilwarsame/)
+- 📧 **Email:** [tahlilw@gmail.com](mailto:tahlilw@gmail.com)
+- 📊 **Portfolio:** [kaggle.com/twarsame](https://www.kaggle.com/twarsame)
+- 📍 **Location:** MEA Region
+- 💼 **Status:** Open to Epic Cupid Consultant opportunities
 
-###
+### 💬 Ask Me About:
+- Cardiovascular workflow optimization
+- Clinical quality improvement methodologies
+- Healthcare data analytics and visualization
+- Epic Cupid self-learning journey
+- MEA region healthcare IT landscape
+
+---
+
+## ⚖️ Legal & Ethical Disclaimer
+
+- ✅ All content is original educational work
+- ✅ No proprietary Epic Systems content included
+- ✅ No PHI or confidential client data
+- ✅ No screenshots from Epic training environments
+- ✅ All infographics and diagrams are self-created
+- ✅ Compliant with Epic's intellectual property guidelines
+
+---
+
+## 📜 License
+
+MIT License / CC BY-SA 4.0 — Free for educational use with attribution
+
+---
+
+## 🙏 Acknowledgments
+
+- Epic Systems for transformative healthcare technology
+- Healthcare IT community for shared knowledge and support
+- Quality improvement methodologies informing this approach
+- Cardiology professionals who've shaped my clinical expertise
+
+---
+
+## 🎯 Career Goals
+
+### Short-Term (6-12 months)
+- Complete Epic Cupid fundamentals self-study
+- Publish 50+ educational infographics on cardiovascular informatics
+- Network with Epic Cupid consultants and MEA healthcare IT leaders
+- Pursue CPHIMS certification
+
+### Medium-Term (1-2 years)
+- Obtain Epic Cupid Proficiency certification
+- Secure Epic Cupid consultant role (in-house or consulting firm)
+- Lead first MEA Epic Cupid implementation
+- Contribute to Epic UserWeb community
+
+### Long-Term (3-5 years)
+- Become recognized Epic Cupid subject matter expert for MEA region
+- Lead large-scale multi-site Epic Cupid deployments
+- Mentor aspiring Epic consultants from clinical backgrounds
+- Publish thought leadership on cardiovascular informatics
+
+---
+
+## 📈 Why Hire Me?
+
+### Unique Combination
+**Clinical + Quality + Analytics + IT** = Rare skill set in Epic consulting market
+
+### Proven Track Record
+- 22 years cardiovascular imaging excellence
+- Multiple professional certifications demonstrating commitment
+- Self-directed Epic learning showing initiative and passion
+
+### MEA Regional Value
+- Understanding of local healthcare landscape
+- Cultural competency and multilingual capabilities
+- Network of clinical and administrative contacts
+
+### Growth Mindset
+- Continuous learner embracing new challenges
+- Adaptable to evolving healthcare technology
+- Committed to Epic community and professional development
+
+---
+
+**⭐ Star my GitHub repository if you find my journey valuable!**
+
+**🔔 Watch for updates as I progress through my Epic Cupid learning journey**
+
+*Last Updated: November 12, 2025*
+
+---
+
+*Transforming cardiovascular care through clinical informatics excellence*
 
 ![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=Twarsame)
 
+## 🔗 Connect With Me
 - 💼 **LinkedIn**: [linkedin.com/in/tahlilwarsame](https://www.linkedin.com/in/tahlilwarsame/)
 - 📧 **Email**: tahlilw@gmail.com
 - 📊 **Portfolio**: [kaggle.com/twarsame](https://www.kaggle.com/twarsame)
