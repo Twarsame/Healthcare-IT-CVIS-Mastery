@@ -11,7 +11,7 @@ This lesson establishes the architectural and market foundation for understandin
 
 **Learning Outcome:** Move from "which system is better" thinking to contextual architectural assessment—the cornerstone of consulting expertise.
 
-**Content Rating: 9.8/10** | **Visual Design: 9.7/10**
+
 
 ---
 
@@ -40,6 +40,10 @@ A radiologist primarily needs:
 - 🖼️ CT/MRI images + 📋 Report availability
 
 **CVIS emphasizes data integration where images play second fiddle to comprehensive clinical context.**
+
+### 📊 Diagram: CVIS vs PACS Philosophy Comparison
+
+This diagram illustrates the fundamental philosophical difference between CVIS (data-centric) and PACS (image-centric) systems. CVIS handles comprehensive clinical data including measurements, clinical context, and multi-source fusion, while PACS focuses primarily on image visualization and storage. The echo study example demonstrates how CVIS manages all seven data types while PACS handles mainly images.
 
 ```mermaid
 graph LR
@@ -93,6 +97,10 @@ graph LR
 2. **🏢 Department Level** coordinates cardiology work (CVIS manages scheduling, reporting)
 3. **📱 Modality Level** acquires clinical data (machines generate images/measurements)
 4. **🔗 Standards Layer** coordinates everything (HL7/DICOM/IHE enable data movement)
+
+### 📊 Diagram: Three-Tier CVIS Architecture with Standards Layer
+
+This architectural diagram shows the complete data flow through three organizational tiers: Enterprise EHR (Epic), Department CVIS, and Modality devices (Echo, Cath, EP). The Standards Layer (HL7, DICOM, IHE) orchestrates bidirectional communication—orders flow down from EHR to CVIS to modalities, while results flow back up. This architecture eliminates manual data entry and enables automated clinical decision support.
 
 ```mermaid
 graph TB
@@ -157,6 +165,10 @@ graph TB
 | **Standards Support** | HL7 v2.x, DICOM, FHIR | HL7 v2.x, HL7 FHIR, DICOM |
 | **Future Direction** | Incremental evolution | Complete EHR rebuild (2025+) |
 
+### 📊 Diagram: EHR Market Share Distribution in Cardiology
+
+This pie chart visualizes the 2024 EHR market distribution in cardiology settings. Epic Cupid dominates with 45% market share and is growing, Cerner PowerChart holds 24% but is declining, and other vendors collectively represent 31% of the market. This distribution explains why Epic-centric architecture knowledge is critical for healthcare IT consultants.
+
 ```mermaid
 pie title EHR Market Share in Cardiology (2024)
     "Epic Cupid" : 45
@@ -171,6 +183,10 @@ pie title EHR Market Share in Cardiology (2024)
 ### 🔄 Echo Workflow: Complete Data Journey
 
 This sequence demonstrates how patient data flows through the entire cardiology ecosystem, from order entry in the EHR through image acquisition and back to clinical documentation.
+
+### 📊 Diagram: Echo Study End-to-End Workflow Sequence
+
+This sequence diagram traces a complete echo study from order placement through result delivery and clinical decision support. It demonstrates how HL7 ORM messages initiate orders, DICOM MWL auto-populates patient demographics, DICOM MPPS/Storage/SR transmit procedure data, and HL7 ORU messages return results to the EHR. The workflow culminates in automated CDS alerts (e.g., EF ≤35%), showcasing fully integrated, zero-manual-entry cardiology informatics.
 
 ```mermaid
 sequenceDiagram
@@ -213,6 +229,10 @@ sequenceDiagram
 ### Complete Standards Landscape
 
 Understanding how different healthcare standards interact is crucial for architecting robust CVIS implementations.
+
+### 📊 Diagram: Complete Healthcare Interoperability Standards Ecosystem
+
+This comprehensive ecosystem diagram maps the four major standards families in healthcare IT: HL7 v2.x (clinical messaging), DICOM (medical imaging), IHE profiles (workflow coordination), and HL7 FHIR (modern APIs). Each family contains specific implementations (e.g., ADT, MWL, CATH profile, RESTful resources). The connecting arrows show evolution paths—legacy HL7 v2.x provides the foundation for DICOM imaging context, IHE profiles coordinate both, and FHIR represents the future direction. Understanding these relationships enables consultants to design cost-effective, standards-compliant integration architectures.
 
 ```mermaid
 graph TB
@@ -295,6 +315,10 @@ graph TB
 3. **💻 IT Bandwidth:** *"Can your IT team maintain interfaces? What's your interface staffing?"*
 4. **📋 Registry Participation:** *"Are you required to report to NCDR? What's your data quality?"*
 5. **🎯 Pain Points:** *"Show me current workflows—where are the manual workarounds?"*
+
+### 📊 Diagram: Consultant Decision Framework Flowchart
+
+This decision flowchart guides consultants through a systematic assessment process to recommend either Epic Cupid-only or hybrid architecture (Epic + best-of-breed CVIS). The framework evaluates four critical dimensions: clinical volume/complexity, IT resources, registry requirements, and interface budget. Organizations answering "yes" to all four questions are candidates for hybrid architecture with standards-based integration (HL7, DICOM, IHE). All other paths lead to Epic Cupid-only recommendations with native integration. This diagnostic approach ensures context-appropriate, cost-effective architecture decisions.
 
 ```mermaid
 flowchart TD
