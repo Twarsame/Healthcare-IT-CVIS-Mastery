@@ -165,13 +165,88 @@ graph TB
 
 ### 📊 Diagram: EHR Market Share Distribution in Cardiology
 
-This pie chart visualizes the 2024 EHR market distribution in cardiology settings. Epic Cupid dominates with 45% market share and is growing, Cerner PowerChart holds 24% but is declining, and other vendors collectively represent 31% of the market. This distribution explains why Epic-centric architecture knowledge is critical for healthcare IT consultants.
 
 ```mermaid
-pie title EHR Market Share in Cardiology (2024)
-    "Epic Cupid" : 45
-    "Cerner PowerChart" : 24
-    "Other Vendors" : 31
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#FF6B6B','primaryTextColor':'#fff','primaryBorderColor':'#C44','secondaryColor':'#4ECDC4','tertiaryColor':'#45B7D1'}}}%%
+graph TD
+    A["<b>📊 EHR MARKET SHARE - CARDIOLOGY 2024</b>"]
+    
+    A --> B["<b>Epic Cupid</b>"]
+    A --> C["<b>Cerner PowerChart</b>"]
+    A --> D["<b>Allscripts</b>"]
+    A --> E["<b>Meditech</b>"]
+    A --> F["<b>athenahealth</b>"]
+    A --> G["<b>Other Vendors</b>"]
+    
+    B --> B1["<b>████████████████████████████████████████████ 45%</b>"]
+    C --> C1["<b>████████████████████████ 24%</b>"]
+    D --> D1["<b>████████████ 12%</b>"]
+    E --> E1["<b>████████ 8%</b>"]
+    F --> F1["<b>██████ 6%</b>"]
+    G --> G1["<b>█████ 5%</b>"]
+    
+    style A fill:#1A237E,stroke:#0D1440,stroke-width:3px,color:#fff,font-size:20px,font-weight:bold
+    style B fill:#FF5252,stroke:#D32F2F,stroke-width:2px,color:#fff,font-size:16px
+    style C fill:#00BFA5,stroke:#00897B,stroke-width:2px,color:#fff,font-size:16px
+    style D fill:#448AFF,stroke:#2962FF,stroke-width:2px,color:#fff,font-size:16px
+    style E fill:#FF9800,stroke:#F57C00,stroke-width:2px,color:#fff,font-size:16px
+    style F fill:#9C27B0,stroke:#7B1FA2,stroke-width:2px,color:#fff,font-size:16px
+    style G fill:#795548,stroke:#5D4037,stroke-width:2px,color:#fff,font-size:16px
+    style B1 fill:#FF5252,stroke:#D32F2F,stroke-width:2px,color:#fff,font-size:14px
+    style C1 fill:#00BFA5,stroke:#00897B,stroke-width:2px,color:#fff,font-size:14px
+    style D1 fill:#448AFF,stroke:#2962FF,stroke-width:2px,color:#fff,font-size:14px
+    style E1 fill:#FF9800,stroke:#F57C00,stroke-width:2px,color:#fff,font-size:14px
+    style F1 fill:#9C27B0,stroke:#7B1FA2,stroke-width:2px,color:#fff,font-size:14px
+    style G1 fill:#795548,stroke:#5D4037,stroke-width:2px,color:#fff,font-size:14px
+```
+This market share diagram illustrates the competitive landscape of EHR systems in cardiology, dominated by Epic Cupid at 45% market share, followed by Cerner PowerChart (24%), Allscripts (12%), Meditech (8%), athenahealth (6%), and other vendors (5%), highlighting Epic's strong position in specialized cardiology solutions.
+
+
+## Workflow Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant Epic as 🏥 Epic EHR
+    participant Cupid as 🫀 Epic Cupid
+    participant Echo as 📡 Echo Machine
+    participant PACS as 💾 PACS
+    
+    Note over Epic,PACS: 🟦 1️⃣ ORDER PHASE (HL7)
+    rect #FF6B6B
+    Epic->>+Cupid: HL7 ORM (Procedure Order)
+    Cupid->>-Epic: HL7 ACK (Order Accepted)
+    end
+    
+    Note over Epic,PACS: 🟦 2️⃣ SCHEDULING PHASE (HL7)
+    rect #FFA726
+    Cupid->>+Epic: HL7 SIU (Appointment Scheduled)
+    Epic->>-Cupid: HL7 ACK (Schedule Updated)
+    end
+    
+    Note over Epic,PACS: 🟩 3️⃣ ACQUISITION PHASE (DICOM)
+    Note over Echo: 🔷 Sonographer logs into Echo machine
+    rect #42A5F5
+    Cupid->>+Echo: DICOM Modality Worklist Query
+    Echo->>-Cupid: Patient Demographics from MWL
+    Note over Echo: 🩺 Perform echo exam
+    Echo->>+PACS: DICOM C-STORE (Images + SR)
+    PACS->>-Echo: DICOM Storage Confirmation
+    end
+    
+    Note over Epic,PACS: 🟩 4️⃣ REVIEW PHASE (DICOM)
+    Note over Cupid: 👨‍⚕️ Cardiologist opens Cupid
+    rect #66BB6A
+    Cupid->>+PACS: DICOM Query/Retrieve
+    PACS->>-Cupid: DICOM Images for Review
+    end
+    
+    Note over Epic,PACS: 🟦 5️⃣ RESULTS PHASE (HL7)
+    Note over Cupid: ✍️ Cardiologist signs report
+    rect #AB47BC
+    Cupid->>+Epic: HL7 ORU (Preliminary Results)
+    Cupid->>Epic: HL7 MDM (Final Report with Note)
+    Epic->>-Cupid: HL7 ACK (Report Received)
+    end
 ```
 
 
@@ -460,3 +535,4 @@ CVIS success depends on comprehensive data integration that supports clinical de
 ---
 
 **🔙 Back to Curriculum Home** | **➡️ Next: 02-standards-interoperability**
+
