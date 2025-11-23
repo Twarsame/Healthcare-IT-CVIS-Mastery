@@ -149,8 +149,6 @@ graph TB
     style IHE fill:#FFD700,stroke:#CCaa00,stroke-width:2px,color:#fff
 ```
 
----
-
 ## 📊 Concept 3: Market Landscape & Positioning
 
 ### 🎯 Platform Comparison Matrix
@@ -175,6 +173,7 @@ pie title EHR Market Share in Cardiology (2024)
     "Cerner PowerChart" : 24
     "Other Vendors" : 31
 ```
+
 
 ---
 
