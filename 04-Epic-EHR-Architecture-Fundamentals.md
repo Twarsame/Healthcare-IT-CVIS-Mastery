@@ -345,6 +345,22 @@ graph TB
     USER -->|"Clinical Workflow"| CVIS_WS
     USER -->|"Image Review"| PACS_WS
 ```
+**CVIS and PACS Integration Architecture**
+
+This diagram illustrates how cardiovascular information systems (CVIS) and picture archiving and communication systems (PACS) work together in a healthcare environment.
+
+**Key Components:**
+
+- **Modalities**: Echo machines, Cath Lab systems, and other cardiology devices that generate medical images
+- **PACS System**: Handles image storage, archiving, and retrieval. Includes archive storage and viewing workstations
+- **CVIS System**: Manages clinical workflows, reporting, and structured data. Includes a database and clinical workstations
+- **Integration Layer**: DICOM interface handles image transmission from modalities to PACS; HL7 interface manages patient data, orders, and results between systems
+- **Bi-directional Communication**: CVIS and PACS query each other to link studies, share context between workstations, allowing cardiologists to access both clinical reports and images seamlessly
+
+The architecture enables efficient cardiology workflow where images flow to PACS for storage while clinical data flows to CVIS for reporting, with both systems integrated for comprehensive patient care.
+
+
+
 ```mermaid
 graph TB
     %% Vivid Color Styles with High Contrast
@@ -384,6 +400,31 @@ graph TB
     FACT --> DIM_VESSEL
     DIM_VESSEL --> RESULT
 ```
+### 2. NCDR CathPCI Registry Star Schema
+
+The **NCDR CathPCI Registry Star Schema** is a data warehouse design for organizing cardiac catheterization procedure data. Here are its key components:
+
+**Central Fact Table:**
+
+- **FACT_CATH_PROCEDURE** - Contains measurable outcomes and metrics from catheterization procedures, with foreign keys linking to all dimension tables
+
+**Dimension Tables:**
+
+- **DIM_PATIENT** - Patient demographics including age group, gender, race/ethnicity, and risk factors
+- **DIM_VESSEL** - Vessel information including name (LAD, LCx, RCA) and TIMI flow measurements (initial and final)
+- **DIM_ENCOUNTER** - Hospital encounter details like admission/discharge dates and facility
+- **DIM_DATE** - Time hierarchy with full date, year, quarter, and month
+- **DIM_DEVICE** - Device details including type, manufacturer, and model
+
+**Example Query:** The diagram illustrates how to calculate the percentage of LAD interventions achieving TIMI 3 flow by joining the fact table to the vessel dimension, filtering for LAD procedures, and calculating the success rate.
+
+This star schema design enables efficient querying and analysis of cardiac catheterization quality metrics for registry reporting.
+
+
+
+
+
+
 ```mermaid
 graph LR
     %% Vivid Color Styles
