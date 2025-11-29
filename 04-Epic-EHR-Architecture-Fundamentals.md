@@ -583,3 +583,282 @@ sequenceDiagram
     Note over Client: Display Cardiology<br/>Observation Data
     end
 ```
+## 🔄 Why FHIR Over HL7 v2 for New Integrations
+
+| **Aspect** | **HL7 v2 (Legacy)** 🔴 | **FHIR R4 (Modern)** 🟢 |
+|------------|----------------------|------------------------|
+| **Data Format** | Pipe-delimited text | JSON/XML (structured) |
+| **Query Access** | Must implement interfaces | RESTful GET requests |
+| **Latency** | Event-driven (slower) ⏱️ | Query-response (sub-second) ⚡ |
+| **Consumer Burden** | Parse text, handle errors | Standard libraries (Python, Node, Java) |
+| **Extensibility** | Custom segments required | Extensions built into standard |
+
+### 💼 Consultant Positioning
+Organizations moving to cloud-based cardiology analytics (Tableau Cloud, Power BI Premium, etc.) require FHIR APIs, not legacy HL7 interfaces. Consultants fluent in both enable smooth modernization.
+---
+
+## Layer 3: DICOM Standards for Cardiovascular Imaging
+DICOM (Digital Imaging and Communications in Medicine) is the international standard for medical image storage and transmission. For cardiology, DICOM is non-negotiable because:
+
+All digital echo, cath lab angiography, cardiac CT, and MRI imaging must be DICOM-compliant
+DICOM enables automated worklist integration (scheduling system talks to ultrasound cart)
+DICOM supports lossless compression (required for interventional images where pixel-level detail determines stent placement)
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#FFD700','primaryTextColor':'#000000','primaryBorderColor':'#FF6347','lineColor':'#4169E1','secondaryColor':'#32CD32','tertiaryColor':'#FF69B4','background':'#FFFFFF','mainBkg':'#FFE4B5','secondBkg':'#E0FFFF','tertiaryBkg':'#FFB6C1','textColor':'#000000','fontSize':'18px','fontFamily':'Arial'}}}%%
+
+flowchart TB
+    Start([🏥 DICOM Workflow in Cardiology])
+    
+    Step1[📅 Step 1: Scheduling System<br/>Generates DICOM MWL]
+    Step1Details["✓ Patient ID<br/>✓ Study Description<br/>✓ Procedure Code: US<br/>✓ Echocardiography"]
+    
+    Step2[🖥️ Step 2: Echo Cart<br/>Polls MWL Periodically]
+    Step2Details["Technician Selects:<br/>'John Doe - TTE'<br/>Auto-populates Demographics<br/>❌ Prevents Manual Errors"]
+    
+    Step3[🔊 Step 3: Scan Performed<br/>Images in DICOM Format]
+    Step3Details["Each Image Contains:<br/>• Patient ID (de-identified)<br/>• Study Instance UID<br/>• Series Instance UID<br/>• Modality: US<br/>• Acquisition Timestamp"]
+    
+    Step4[⬆️ Step 4: DICOM C-STORE<br/>Command Uploads to PACS]
+    Step4Details["Images in PACS Archive<br/>⏱️ ~10 seconds after scan"]
+    
+    Step5[👨‍⚕️ Step 5: Cardiologist<br/>Reviews via PACS Viewer]
+    Step5Details["• References Report in Epic EHR<br/>• Triggers Epic FHIR API<br/>• Fetches Ejection Fraction Data"]
+    
+    Start --> Step1
+    Step1 --> Step1Details
+    Step1Details --> Step2
+    Step2 --> Step2Details
+    Step2Details --> Step3
+    Step3 --> Step3Details
+    Step3Details --> Step4
+    Step4 --> Step4Details
+    Step4Details --> Step5
+    Step5 --> Step5Details
+    
+    style Start fill:#FF6347,stroke:#000000,stroke-width:4px,color:#FFFFFF
+    style Step1 fill:#4169E1,stroke:#000000,stroke-width:3px,color:#FFFFFF
+    style Step1Details fill:#87CEEB,stroke:#000000,stroke-width:2px,color:#000000
+    style Step2 fill:#32CD32,stroke:#000000,stroke-width:3px,color:#000000
+    style Step2Details fill:#90EE90,stroke:#000000,stroke-width:2px,color:#000000
+    style Step3 fill:#FF69B4,stroke:#000000,stroke-width:3px,color:#FFFFFF
+    style Step3Details fill:#FFB6C1,stroke:#000000,stroke-width:2px,color:#000000
+    style Step4 fill:#FFD700,stroke:#000000,stroke-width:3px,color:#000000
+    style Step4Details fill:#FFEC8B,stroke:#000000,stroke-width:2px,color:#000000
+    style Step5 fill:#9370DB,stroke:#000000,stroke-width:3px,color:#FFFFFF
+    style Step5Details fill:#DDA0DD,stroke:#000000,stroke-width:2px,color:#000000
+```
+Consultant Consideration: When a customer says "Our cath lab images aren't showing up in Epic," the investigation path is:
+
+Are DICOM images being created? (Cath lab equipment issue)
+Is DICOM C-STORE configured? (Interface issue)
+Is PACS viewer integrated with Epic? (Workflow issue)
+
+Understanding DICOM doesn't mean you're a radiology IT specialist, but it ensures you ask the right questions.
+---
+## Layer 4: IHE Integration Profiles (The Workflow Pattern Layer)
+IHE (Integrating the Healthcare Enterprise) combines HL7, DICOM, and other standards into tested "profiles" that describe complete workflow integration.
+Think of IHE as: "Here's how all the standards fit together to solve a specific clinical problem."
+
+---
+
+# 🫀 Cardiology-Specific IHE Profiles
+
+| 🔷 **Profile** | 🎯 **What It Solves** | 📋 **Standards Used** |
+|----------------|----------------------|----------------------|
+| **CATH** <br/> *(Cardiac Catheterization)* | Integrates ordering → scheduling → acquisition → storage → viewing for cath procedures | • DICOM<br/>• HL7 ADT/ORM/ORU<br/>• DICOM MWL |
+| **ECHO** <br/> *(Echocardiography)* | Similar to CATH but includes portable echo devices and stress echo multi-stage procedures | • DICOM<br/>• HL7<br/>• DICOM SCP |
+| **IDCO** <br/> *(Implantable Device Cardiac Observation)* | Transfers device interrogation data (pacemaker/ICD checks) from device clinic to EHR | • HL7 v2 custom segments<br/>• DICOM SR |
+| **RCS-CathPCI** <br/> *(Registry Content Submission)* | Standardized CDA format for automated submission to ACC NCDR CathPCI Registry | • CDA R2<br/>*(Clinical Document Architecture)* |
+
+---
+
+## Cardiology-Specific IHE Profiles
+# 🫀 Cardiology-Specific IHE Profiles
+
+| 🔷 **Profile** | 🎯 **What It Solves** | 📋 **Standards Used** |
+|----------------|----------------------|----------------------|
+| **CATH** <br/> *(Cardiac Catheterization)* | Integrates ordering → scheduling → acquisition → storage → viewing for cath procedures | • DICOM<br/>• HL7 ADT/ORM/ORU<br/>• DICOM MWL |
+| **ECHO** <br/> *(Echocardiography)* | Similar to CATH but includes portable echo devices and stress echo multi-stage procedures | • DICOM<br/>• HL7<br/>• DICOM SCP |
+| **IDCO** <br/> *(Implantable Device Cardiac Observation)* | Transfers device interrogation data (pacemaker/ICD checks) from device clinic to EHR | • HL7 v2 custom segments<br/>• DICOM SR |
+| **RCS-CathPCI** <br/> *(Registry Content Submission)* | Standardized CDA format for automated submission to ACC NCDR CathPCI Registry | • CDA R2<br/>*(Clinical Document Architecture)* |
+
+---
+
+### 💡 Real-World IHE Impact Example:
+
+```mermaid
+flowchart TD
+    A["<b>Problem: Manual Data Entry</b><br/>⏱️ 8 minutes per patient"] -->|Implement| B["<b>IHE ECHO Profile Solution</b>"]
+    
+    B --> C["Epic Scheduling<br/>System"]
+    B --> D["DICOM MWL<br/>Service"]
+    B --> E["Echo Cart<br/>Equipment"]
+    
+    C -->|Generates| D
+    D -->|Polls every<br/>2 minutes| E
+    E -->|Auto-populates| F["Patient Data<br/>Display"]
+    
+    F --> G["✅ Technician sees:<br/>Jane Doe - TTE"]
+    G --> H["🚫 No Manual<br/>Entry Needed"]
+    H --> I["<b>🎯 Result</b><br/>⚡ 1 minute per patient<br/>📊 87.5% time reduction"]
+    
+    style A fill:#FF6B6B,stroke:#C92A2A,stroke-width:4px,color:#FFFFFF
+    style B fill:#4ECDC4,stroke:#0B7285,stroke-width:4px,color:#FFFFFF
+    style C fill:#FFD93D,stroke:#E67700,stroke-width:3px,color:#1A1A1A
+    style D fill:#95E1D3,stroke:#087F5B,stroke-width:3px,color:#1A1A1A
+    style E fill:#FFD93D,stroke:#E67700,stroke-width:3px,color:#1A1A1A
+    style F fill:#A8E6CF,stroke:#2B8A3E,stroke-width:3px,color:#1A1A1A
+    style G fill:#74C0FC,stroke:#1971C2,stroke-width:3px,color:#1A1A1A
+    style H fill:#FFA8A8,stroke:#C92A2A,stroke-width:3px,color:#1A1A1A
+    style I fill:#51CF66,stroke:#2B8A3E,stroke-width:4px,color:#FFFFFF
+```
+
+## Core Concept 4: Cupid Architecture & Cardiology Workflow
+What Is Cupid Within the Epic Ecosystem?
+Cupid is not a standalone Cardiovascular Information System. It's the cardiology module within Epic that:
+
+Provides specialized documentation for cardiac procedures (cath, echo, EP, stress)
+Integrates with third-party systems for imaging storage (PACS) and specialized analysis
+Leverages Chronicles as the unified data repository for patient data
+Coordinates workflows across pre-, intra-, and post-procedure phases
+---
+## Procedural Workflow Architecture
+```mermaid
+graph TB
+    subgraph PRE["🔵 PRE-PROCEDURE PHASE"]
+        A["📅 Snapboard<br/>(Scheduling)"]
+        B["📋 Pre-Proc Navigator<br/>(Orders, Meds)"]
+        C["🚨 Quick Case<br/>(STEMI Activation)"]
+    end
+    
+    subgraph INTRA["🟢 INTRA-PROCEDURE PHASE"]
+        D["📊 Status Board<br/>(Lab Utilization)"]
+        E["⏱️ Case Tracking<br/>(Critical Events)"]
+        F["📝 Procedure Log<br/>(Real-time Docs)"]
+        G["🫀 Vessel Drawing<br/>(Coronary Findings)"]
+    end
+    
+    subgraph POST["🟡 POST-PROCEDURE PHASE"]
+        H["✅ Post-Proc Navigator<br/>(Completion)"]
+        I["📄 Study Review<br/>(Report Creation)"]
+        J["📥 In Basket<br/>(Deficiency Tracking)"]
+    end
+    
+    K["💾 Chronicles Database<br/>(Unified Record)"]
+    
+    PRE --> INTRA
+    INTRA --> POST
+    
+    A -.->|Store| K
+    B -.->|Store| K
+    C -.->|Store| K
+    D -.->|Update| K
+    E -.->|Update| K
+    F -.->|Update| K
+    G -.->|Update| K
+    H -.->|Finalize| K
+    I -.->|Finalize| K
+    J -.->|Track| K
+    
+    style PRE fill:#0D47A1,stroke:#BBDEFB,stroke-width:3px,color:#FFFFFF
+    style INTRA fill:#1B5E20,stroke:#C8E6C9,stroke-width:3px,color:#FFFFFF
+    style POST fill:#E65100,stroke:#FFCCBC,stroke-width:3px,color:#FFFFFF
+    style K fill:#B71C1C,stroke:#FFCDD2,stroke-width:4px,color:#FFFFFF
+    
+    style A fill:#1976D2,stroke:#BBDEFB,stroke-width:2px,color:#FFFFFF
+    style B fill:#1976D2,stroke:#BBDEFB,stroke-width:2px,color:#FFFFFF
+    style C fill:#1976D2,stroke:#BBDEFB,stroke-width:2px,color:#FFFFFF
+    
+    style D fill:#2E7D32,stroke:#C8E6C9,stroke-width:2px,color:#FFFFFF
+    style E fill:#2E7D32,stroke:#C8E6C9,stroke-width:2px,color:#FFFFFF
+    style F fill:#2E7D32,stroke:#C8E6C9,stroke-width:2px,color:#FFFFFF
+    style G fill:#2E7D32,stroke:#C8E6C9,stroke-width:2px,color:#FFFFFF
+    
+    style H fill:#EF6C00,stroke:#FFCCBC,stroke-width:2px,color:#FFFFFF
+    style I fill:#EF6C00,stroke:#FFCCBC,stroke-width:2px,color:#FFFFFF
+    style J fill:#EF6C00,stroke:#FFCCBC,stroke-width:2px,color:#FFFFFF
+```
+## Vendor Integration Requirements
+Critical insight for consultants: Epic Cupid does NOT include cardiac PACS (Picture Archival and Communication System).
+This architectural gap is the primary reason most Epic cardiology implementations include third-party systems:
+
+```mermaid
+graph TD
+    A["Epic Cupid<br/>(Scheduling, Workflow)"] --> B["Chronicles<br/>(Unified Data)"]
+    B --> C["PACS<br/>(Image Storage)"]
+    B --> D["CVIS<br/>(Structured Report)"]
+    B --> E["Registry<br/>(CathPCI, STS, EP)"]
+    C --> F["HL7/FHIR/DICOM<br/>Integration"]
+    D --> F
+    E --> F
+    
+    style A fill:#FF6B6B,stroke:#C92A2A,stroke-width:3px,color:#FFFFFF
+    style B fill:#4ECDC4,stroke:#0D7377,stroke-width:3px,color:#FFFFFF
+    style C fill:#95E1D3,stroke:#38A3A5,stroke-width:2px,color:#000000
+    style D fill:#FFE66D,stroke:#F4A261,stroke-width:2px,color:#000000
+    style E fill:#A8DADC,stroke:#457B9D,stroke-width:2px,color:#000000
+    style F fill:#6C5CE7,stroke:#5F3DC4,stroke-width:3px,color:#FFFFFF
+```
+
+```mermaid
+graph TD
+    A["<b>Epic Cupid</b><br/>Scheduling & Workflow"] --> B["<b>Chronicles</b><br/>Unified Data Repository"]
+    B --> C["<b>PACS</b><br/>Image Storage"]
+    B --> D["<b>CVIS</b><br/>Structured Reporting"]
+    B --> E["<b>Registry</b><br/>CathPCI | STS | EP"]
+    C --> F["<b>Integration Layer</b><br/>HL7 | FHIR | DICOM"]
+    D --> F
+    E --> F
+    
+    style A fill:#E74C3C,stroke:#C0392B,stroke-width:4px,color:#FFFFFF,font-weight:bold
+    style B fill:#3498DB,stroke:#2874A6,stroke-width:4px,color:#FFFFFF,font-weight:bold
+    style C fill:#2ECC71,stroke:#27AE60,stroke-width:3px,color:#FFFFFF,font-weight:bold
+    style D fill:#F39C12,stroke:#D68910,stroke-width:3px,color:#FFFFFF,font-weight:bold
+    style E fill:#9B59B6,stroke:#7D3C98,stroke-width:3px,color:#FFFFFF,font-weight:bold
+    style F fill:#1ABC9C,stroke:#16A085,stroke-width:4px,color:#FFFFFF,font-weight:bold
+```
+```mermaid
+graph LR
+    A["<b>Epic Cupid</b><br/>Scheduling"] --> B["<b>Chronicles</b><br/>Data Hub"]
+    B --> C["<b>PACS</b><br/>Images"]
+    B --> D["<b>CVIS</b><br/>Reports"]
+    B --> E["<b>Registry</b><br/>Outcomes"]
+    C --> F["<b>Integration</b><br/>HL7/FHIR/DICOM"]
+    D --> F
+    E --> F
+    
+    style A fill:#E63946,stroke:#A4161A,stroke-width:3px,color:#FFFFFF
+    style B fill:#457B9D,stroke:#1D3557,stroke-width:3px,color:#FFFFFF
+    style C fill:#2A9D8F,stroke:#264653,stroke-width:3px,color:#FFFFFF
+    style D fill:#E9C46A,stroke:#F4A261,stroke-width:3px,color:#000000
+    style E fill:#8338EC,stroke:#5A189A,stroke-width:3px,color:#FFFFFF
+    style F fill:#06FFA5,stroke:#00B874,stroke-width:3px,color:#000000
+```
+
+## Integrated Vendor Ecosystem Example
+From open.epic.com Technical Specifications, validated integrations include:
+Hemodynamic Systems:
+
+GE CardioLab
+Philips Xper
+Siemens Axiom Sensis
+
+Echocardiography:
+
+GE EchoPAC
+Philips Xcelera Echo Lab Management
+
+CVIS/PACS:
+
+McKesson Horizon CPACS
+Merge Cardio
+ScImage PICOM Enterprise
+
+Device Management:
+
+Medtronic Paceart
+Boston Scientific (SJM)
+Abbott (St. Jude)
+
+Consultant Implication: When a health system says "We're going Epic," the reality is "We're going Epic + vendor CVIS + PACS + device management systems." Consultants who understand this hybrid architecture are positioned to coordinate complex multi-vendor implementations.
