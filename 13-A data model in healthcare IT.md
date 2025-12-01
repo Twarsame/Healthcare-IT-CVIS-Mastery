@@ -1206,12 +1206,9 @@ Here's a table format with visual elements for the key concepts:
 | **📋 Audit Trail** | Record of data access and modifications | Who, when, what changed (HIPAA compliance) |
 
 ---
-## Application of Key Concepts: Cardiac Data Modeling in Practice
+Application of Key Concepts: Cardiac Data Modeling in Practice
 
-Real-World Example: Catheterization Lab Hemodynamic Data
-Imagine a cardiologist performs a diagnostic catheterization and measures hemodynamic pressures. Let's trace how this clinical data flows through Cupid's data model:
-Clinical Event: Cardiologist measures RA (right atrial) pressure = 8 mmHg during baseline phase of catheterization
-What Gets Captured in Cupid's Data Model:
+Real-World Example: Catheterization Lab Hemodynamic Data Imagine a cardiologist performs a diagnostic catheterization and measures hemodynamic pressures. Let's trace how this clinical data flows through Cupid's data model: Clinical Event: Cardiologist measures RA (right atrial) pressure = 8 mmHg during baseline phase of catheterization What Gets Captured in Cupid's Data Model:
 ---
 **Why Each Element Matters for Consulting**:
 
@@ -1234,12 +1231,10 @@ Here's the data formatted as a table with icons for better visual clarity:
 | 📝 Audit Trail | DateTime, user, action | Compliance audit trail |
 
 ---
-Why Each Element Matters for Consulting:
+## Why Each Element Matters for Consulting: 
 
-Standardized codes: When you integrate with a PACS or populate a national registry (e.g., Society for Cardiac Angiography and Interventions registry), standardized codes ensure data quality. A consultant must understand coding requirements for regulatory reporting.
-Temporal logic: Hemodynamic data is meaningless without temporal context. Baseline RA pressure of 8 mmHg might be normal, but if it was 8 mmHg after nitroglycerin, that might suggest baseline elevation. A consultant evaluating EHR design must ensure timestamp precision is sufficient for clinical interpretation.
-Measurement method: Device accuracy matters. An optical pulse oximetry reading differs from arterial line monitoring. The data model must distinguish these because clinical interpretation differs. A consultant recommends data model design that prevents method confusion.
-Audit trail: In a cath lab, if a hemodynamic value is later corrected (clinician realizes wrong pressure transducer was used), the audit trail must show the original value and the correction. Healthcare IT consulting requires understanding compliance implications of data modification policies.
+Standardized codes: When you integrate with a PACS or populate a national registry (e.g., Society for Cardiac Angiography and Interventions registry), standardized codes ensure data quality. A consultant must understand coding requirements for regulatory reporting. Temporal logic: Hemodynamic data is meaningless without temporal context. Baseline RA pressure of 8 mmHg might be normal, but if it was 8 mmHg after nitroglycerin, that might suggest baseline elevation. A consultant evaluating EHR design must ensure timestamp precision is sufficient for clinical interpretation. Measurement method: Device accuracy matters. An optical pulse oximetry reading differs from arterial line monitoring. The data model must distinguish these because clinical interpretation differs. A consultant recommends data model design that prevents method confusion. Audit trail: In a cath lab, if a hemodynamic value is later corrected (clinician realizes wrong pressure transducer was used), the audit trail must show the original value and the correction. Healthcare IT consulting requires understanding compliance implications of data modification policies.
+
 ---
 
 ## Integration Challenge: Cupid Logical Layer to FHIR Mapping
@@ -1341,17 +1336,6 @@ graph TB
     style T fill:#6A1B9A,stroke:#FFFFFF,stroke-width:5px,color:#FFFFFF
 
 ```
-
-
-
-
-
-
-
-
-
-
-
 
 
 ### Key Components Explained
