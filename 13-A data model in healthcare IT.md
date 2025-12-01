@@ -1,3 +1,29 @@
+## Lesson 2.2: Epic Cupid Data Models
+
+---
+
+Cardiac-Specific Data Architecture and PACS Integration
+Module 2: Epic EHR Architecture Fundamentals
+Lesson Duration: 90 minutes | Complexity Level: Intermediate-Advanced
+Target Audience: Clinical informaticists transitioning to healthcare IT consulting
+---
+Executive Summary
+Epic Cupid's data model architecture represents a healthcare-specific approach to structuring clinical information that fundamentally differs from general-purpose EHR systems. Rather than treating data as isolated transactional records, Cupid implements a semantically rich data architecture designed to capture the clinical context necessary for evidence-based decision-making. For cardiovascular informatics, this architectural approach is critical: Cupid structures cardiac data (hemodynamic measurements, procedural events, imaging metadata) in ways that preserve clinical meaning while enabling interoperability with PACS systems, hemodynamic devices, and downstream analytics platforms.
+This lesson bridges your clinical cardiology knowledge with technical architectural principles. As a cardiovascular professional transitioning to consulting, understanding how Cupid structures cardiac data—and why it structures it that way—will differentiate you as a consultant who can advise on system design decisions, workflow optimization, and vendor evaluation, rather than simply implementing configuration changes.
+Key Learning Outcome: You will understand how Cupid's data model architecture supports cardiac workflows, enables PACS integration, and provides the technical foundation for clinical decision support systems—positioning you to evaluate architectural fit and recommend optimization strategies.
+---
+Key Concepts
+1. Data Model Definition and Strategic Importance
+A data model in healthcare IT is the architectural blueprint that defines how clinical information is stored, organized, retrieved, and exchanged across systems. Unlike a database schema (the technical structure), a data model is the semantic representation—it codifies "what information is important, how it relates to other information, and what constraints ensure clinical validity."
+For healthcare consulting, understanding data models is essential because:
+
+Clinical Validity: A poorly designed data model may allow clinically impossible data states (e.g., recording systolic BP < diastolic BP), leading to downstream analytics errors
+Interoperability: Data models determine which information can be exchanged with external systems like PACS or cardiology devices
+Performance: Model design choices impact query performance in real-time clinical dashboards and population health analytics
+Regulatory Compliance: Audit trail requirements, data integrity constraints, and retention rules are enforced through data model design
+
+
+---
 ### Data Model Architecture
 
 ```mermaid
@@ -684,3 +710,572 @@ graph TB
 💡 **Pro Tip:** This architecture follows industry best practices for healthcare system integration, ensuring compliance with standards like HL7, FHIR, and HIPAA while maintaining flexibility for future enhancements.
 
 </aside>
+
+---
+### 3. Semantic Data Modeling and Clinical Context
+---
+Cupid's strength is semantic richness—the ability to store not just the data value itself, but the clinical context that gives it meaning. Consider a simple example: recording a patient's heart rate.
+Minimal Data Model (just a value):
+
+```mermaid
+graph TB
+    %% Define main components
+    A["<b>Presentation Layer</b><br/>User Interface<br/>Clinical Dashboards<br/>Mobile Apps"]
+    B["<b>Application Layer</b><br/>Business Logic<br/>Workflow Engine<br/>Validation Rules"]
+    C["<b>Semantic Layer</b><br/>Data Standardization<br/>Terminology Mapping<br/>Context Enrichment"]
+    D["<b>Integration Layer</b><br/>API Gateway<br/>Message Broker<br/>Data Transformation"]
+    E["<b>Data Layer</b><br/>Clinical Data Repository<br/>Reference Data<br/>Audit Logs"]
+    
+    %% Define semantic consistency components
+    F["<b>Semantic Consistency Engine</b><br/>✓ Terminology Validation<br/>✓ Code Mapping (ICD, SNOMED)<br/>✓ Unit Conversion<br/>✓ Context Preservation"]
+    
+    G["<b>Data Integrity Manager</b><br/>✓ Data Quality Rules<br/>✓ Referential Integrity<br/>✓ Constraint Validation<br/>✓ Audit Trail"]
+    
+    %% Define flow
+    A -->|"User Input<br/>(Heart Rate: 72 bpm)"| B
+    B -->|"Validated Data<br/>+ Business Context"| C
+    C -->|"Semantically<br/>Enriched Data"| D
+    C -.->|"Ensures Consistency"| F
+    D -->|"Standardized<br/>Clinical Message"| E
+    D -.->|"Maintains Integrity"| G
+    E -->|"Stored Data<br/>+ Metadata"| G
+    F -->|"Terminology<br/>Standards"| C
+    G -->|"Quality<br/>Metrics"| E
+    
+    %% Feedback loops
+    E -.->|"Query Results"| D
+    D -.->|"Formatted Response"| B
+    B -.->|"Display Data"| A
+    
+    %% Styling
+    style A fill:#FF6B6B,stroke:#333,stroke-width:4px,color:#fff,font-size:16px
+    style B fill:#4ECDC4,stroke:#333,stroke-width:4px,color:#fff,font-size:16px
+    style C fill:#FFD93D,stroke:#333,stroke-width:4px,color:#333,font-size:16px
+    style D fill:#6BCB77,stroke:#333,stroke-width:4px,color:#fff,font-size:16px
+    style E fill:#A29BFE,stroke:#333,stroke-width:4px,color:#fff,font-size:16px
+    style F fill:#FD79A8,stroke:#333,stroke-width:4px,color:#fff,font-size:15px
+    style G fill:#74B9FF,stroke:#333,stroke-width:4px,color:#fff,font-size:15px
+
+
+```
+Each relationship has defined cardinality (how many of each can exist) and data integrity rules. For example: "One patient can have many encounters" (1:N relationship) but "Each encounter must have one primary provider" (N:1 relationship).
+---
+## Component Descriptions
+
+### 1. Presentation Layer (User Interface)
+
+- **Purpose:** Front-end interface where clinicians interact with the system
+- **Components:** Clinical dashboards, mobile apps, web portals
+- **Function:** Captures user input and displays clinical information
+
+### 2. Application Layer (Business Logic)
+
+- **Purpose:** Processes business rules and workflow logic
+- **Components:** Validation rules, workflow engine, clinical protocols
+- **Function:** Validates input against business rules before processing
+
+### 3. Semantic Layer (Data Standardization)
+
+- **Purpose:** Enriches data with semantic meaning and context
+- **Components:** Terminology mapping, context enrichment, standardization engine
+- **Function:** Transforms raw data into semantically rich, standardized format
+
+### 4. Integration Layer (Data Exchange)
+
+- **Purpose:** Manages data exchange between systems
+- **Components:** API gateway, message broker (HL7, FHIR), transformation services
+- **Function:** Routes and transforms messages between different healthcare systems
+
+### 5. Data Layer (Storage)
+
+- **Purpose:** Persists clinical data with full metadata and audit trails
+- **Components:** Clinical data repository, reference data, audit logs
+- **Function:** Stores semantically enriched data with integrity constraints
+
+---
+
+## 🔒 Semantic Consistency & Data Integrity
+
+### Semantic Consistency Engine
+
+- **Terminology Validation:** Ensures all clinical terms match standard vocabularies (SNOMED CT, LOINC)
+- **Code Mapping:** Automatically maps between different coding systems (ICD-10, CPT, SNOMED)
+- **Unit Conversion:** Standardizes units of measure across all data entries
+- **Context Preservation:** Maintains clinical context throughout data flow
+
+### Data Integrity Manager
+
+- **Data Quality Rules:** Enforces completeness, accuracy, and validity checks
+- **Referential Integrity:** Ensures relationships between data elements remain valid
+- **Constraint Validation:** Verifies data against defined constraints (e.g., reference ranges)
+- **Audit Trail:** Tracks all data changes with who, what, when, and why
+
+---
+
+## 🔄 Information Flow Example
+
+1. **User Input:** Clinician enters "Heart Rate: 72 bpm" in dashboard
+2. **Application Validation:** System validates input format and business rules
+3. **Semantic Enrichment:** Data enriched with metadata (timestamp, method, context, reference range)
+4. **Consistency Check:** Semantic engine validates terminology and units
+5. **Integration:** Standardized message created (HL7/FHIR format)
+6. **Integrity Verification:** Data quality rules applied, relationships verified
+7. **Storage:** Semantically rich data stored with full audit trail
+8. **Retrieval:** Data retrieved with full context for clinical decision support
+
+---
+
+<aside>
+**✅ Key Benefits:** This logical architecture ensures that every piece of clinical data maintains its semantic meaning and integrity throughout its lifecycle, enabling accurate clinical decision-making, seamless interoperability, and regulatory compliance.
+
+</aside>
+
+---
+## Component Descriptions
+
+### 1. Presentation Layer (User Interface)
+
+- **Purpose:** Front-end interface where clinicians interact with the system
+- **Components:** Clinical dashboards, mobile apps, web portals
+- **Function:** Captures user input and displays clinical information
+
+### 2. Application Layer (Business Logic)
+
+- **Purpose:** Processes business rules and workflow logic
+- **Components:** Validation rules, workflow engine, clinical protocols
+- **Function:** Validates input against business rules before processing
+
+### 3. Semantic Layer (Data Standardization)
+
+- **Purpose:** Enriches data with semantic meaning and context
+- **Components:** Terminology mapping, context enrichment, standardization engine
+- **Function:** Transforms raw data into semantically rich, standardized format
+
+### 4. Integration Layer (Data Exchange)
+
+- **Purpose:** Manages data exchange between systems
+- **Components:** API gateway, message broker (HL7, FHIR), transformation services
+- **Function:** Routes and transforms messages between different healthcare systems
+
+### 5. Data Layer (Storage)
+
+- **Purpose:** Persists clinical data with full metadata and audit trails
+- **Components:** Clinical data repository, reference data, audit logs
+- **Function:** Stores semantically enriched data with integrity constraints
+
+---
+
+## 🔒 Semantic Consistency & Data Integrity
+
+### Semantic Consistency Engine
+
+- **Terminology Validation:** Ensures all clinical terms match standard vocabularies (SNOMED CT, LOINC)
+- **Code Mapping:** Automatically maps between different coding systems (ICD-10, CPT, SNOMED)
+- **Unit Conversion:** Standardizes units of measure across all data entries
+- **Context Preservation:** Maintains clinical context throughout data flow
+
+### Data Integrity Manager
+
+- **Data Quality Rules:** Enforces completeness, accuracy, and validity checks
+- **Referential Integrity:** Ensures relationships between data elements remain valid
+- **Constraint Validation:** Verifies data against defined constraints (e.g., reference ranges)
+- **Audit Trail:** Tracks all data changes with who, what, when, and why
+
+---
+
+## 🔄 Information Flow Example
+
+1. **User Input:** Clinician enters "Heart Rate: 72 bpm" in dashboard
+2. **Application Validation:** System validates input format and business rules
+3. **Semantic Enrichment:** Data enriched with metadata (timestamp, method, context, reference range)
+4. **Consistency Check:** Semantic engine validates terminology and units
+5. **Integration:** Standardized message created (HL7/FHIR format)
+6. **Integrity Verification:** Data quality rules applied, relationships verified
+7. **Storage:** Semantically rich data stored with full audit trail
+8. **Retrieval:** Data retrieved with full context for clinical decision support
+
+---
+
+<aside>
+### This semantic richness is why Cupid is valuable for cardiology:
+    hemodynamic data requires rich context (was this measurement during baseline rest, post-nitroglycerin, post-exercise? under what conditions was it taken?) to have clinical meaning.
+
+    ---
+
+## 4. Entity-Relationship and Clinical Domain Models
+Cupid uses an entity-relationship approach where clinical entities (Patient, Encounter, Order, Result, Procedure, Document) are connected through clearly defined relationships that reflect clinical workflow.
+For cardiovascular medicine, this looks like:
+
+---
+```mermaid
+graph TB
+    Patient[("<b>👤 PATIENT</b><br/>Demographics<br/>Medical History")]
+    
+    Encounter[("<b>🏥 ENCOUNTER</b><br/>Visit / Admission<br/>Episode of Care")]
+    
+    Vitals[("<b>💓 VITAL SIGNS</b><br/>Heart Rate<br/>Blood Pressure<br/>O2 Saturation")]
+    
+    Procedures[("<b>🔬 PROCEDURES</b><br/>Cath Lab Event<br/>Echo Exam")]
+    
+    ProcComponents[("<b>📊 PROCEDURE<br/>COMPONENTS</b><br/>Angiogram<br/>Hemodynamic<br/>Measurements")]
+    
+    Results[("<b>📈 RESULTS</b><br/>Coronary Stenosis %<br/>Hemodynamic<br/>Pressures")]
+    
+    Orders[("<b>📋 ORDERS</b><br/>Echocardiogram<br/>Cardiac MRI")]
+    
+    OrderResults[("<b>📄 ORDER RESULTS</b><br/>Final Echo Report<br/>Measurements")]
+    
+    Documents[("<b>📝 CLINICAL<br/>DOCUMENTS</b><br/>H&P<br/>Discharge Summary<br/>Procedure Note")]
+    
+    Patient -->|"Has"| Encounter
+    Encounter -->|"Records"| Vitals
+    Encounter -->|"Includes"| Procedures
+    Encounter -->|"Generates"| Orders
+    Encounter -->|"Contains"| Documents
+    
+    Procedures -->|"Composed of"| ProcComponents
+    ProcComponents -->|"Produces"| Results
+    
+    Orders -->|"Yields"| OrderResults
+    
+    style Patient fill:#FF6B6B,stroke:#C92A2A,stroke-width:3px,color:#FFF
+    style Encounter fill:#4ECDC4,stroke:#0C8599,stroke-width:3px,color:#FFF
+    style Vitals fill:#FFD93D,stroke:#F5A623,stroke-width:3px,color:#000
+    style Procedures fill:#95E1D3,stroke:#38A169,stroke-width:3px,color:#000
+    style ProcComponents fill:#A8E6CF,stroke:#2F855A,stroke-width:3px,color:#000
+    style Results fill:#DDA15E,stroke:#BC6C25,stroke-width:3px,color:#FFF
+    style Orders fill:#B8B8FF,stroke:#6C5CE7,stroke-width:3px,color:#FFF
+    style OrderResults fill:#C7CEEA,stroke:#4A5568,stroke-width:3px,color:#000
+    style Documents fill:#FFDAB9,stroke:#DD6B20,stroke-width:3px,color:#000
+
+```
+
+---
+### 📋 Step-by-Step Diagram Breakdown
+
+Here's a clear explanation of how clinical information flows through the Cupid system:
+
+1. 👤 **Patient (Starting Point)**The patient is the central entity containing demographics and medical history. Every piece of clinical data connects back to a specific patient.
+2. 🏥 **Encounter (Episode of Care)**Each patient visit or hospital admission creates an encounter. This serves as the main container for all clinical activities during that episode of care.
+3. 💓 **Vital Signs (Baseline Context)**The encounter captures vital signs like heart rate, blood pressure, and oxygen saturation. These provide essential baseline data for clinical decision-making.
+4. 🔬 **Procedures (Clinical Events)**Procedures such as catheterization lab events or echocardiogram exams are performed during the encounter. Each procedure represents a distinct clinical intervention.
+5. 📊 **Procedure Components (Detailed Activities)**Each procedure breaks down into specific components. For example, a cath lab procedure includes angiograms and hemodynamic measurements.
+6. 📈 **Results (Clinical Findings)**Procedure components generate measurable results such as coronary stenosis percentages and hemodynamic pressures. These are the key clinical outputs.
+7. 📋 **Orders (Clinical Requests)**During the encounter, physicians generate orders for diagnostic tests like echocardiograms or cardiac MRIs. These orders initiate specific clinical workflows.
+8. 📄 **Order Results (Diagnostic Reports)**Completed orders produce order results, such as final echo reports with detailed measurements. These provide structured diagnostic information.
+9. 📝 **Clinical Documents (Medical Records)**The encounter also generates various clinical documents including history and physical (H&P), discharge summaries, and procedure notes. These capture the complete clinical narrative.
+
+**🔄 Information Flow:** Data flows hierarchically from Patient → Encounter → Clinical Activities (Vitals, Procedures, Orders, Documents), with each level adding more specific clinical detail and context.
+
+---
+
+## 5. FHIR and Standards-Based Data Models
+---
+Modern healthcare IT—including Cupid's current architecture evolution—increasingly aligns with Fast Healthcare Interoperability Resources (FHIR), an HL7 standard for healthcare data exchange.
+---
+FHIR defines standardized data models for common clinical entities: Patient, Observation (measurements), Procedure, DiagnosticReport (imaging/lab reports), Medication, and many others. While Cupid's internal data model predates FHIR, newer implementations use FHIR as a standard interface layer for external integration.
+Why FHIR matters for cardiac consulting: When you evaluate PACS integration, you'll see FHIR-based approaches (FHIR DiagnosticReport for cardiac imaging) increasingly as an alternative to traditional HL7 v2 messaging. Understanding this standards evolution helps you anticipate integration architectures.
+---
+Visual Diagrams and Architecture
+Diagram 1: Cupid Data Model Layering
+---
+```mermaid
+graph TB
+    subgraph Clinical["🩺 CLINICAL DOCUMENTATION LAYER"]
+        style Clinical fill:#4A90E2,stroke:#2E5C8A,stroke-width:3px,color:#FFFFFF
+        ClinDoc["<b>Clinical Entry Point</b><br/><br/>👨‍⚕️ Echo Findings<br/>🫀 Cath Lab Procedures<br/>📊 Hemodynamic Measurements<br/>🔍 Diagnostic Impressions<br/>💊 Medication Orders"]
+        style ClinDoc fill:#5BA3F5,stroke:#4A90E2,stroke-width:2px,color:#FFFFFF,font-size:14px
+    end
+
+    subgraph Logical["🧠 LOGICAL DATA MODEL LAYER"]
+        style Logical fill:#9B59B6,stroke:#6C3483,stroke-width:3px,color:#FFFFFF
+        LE["<b>Semantic Entities</b><br/>Business Logic & Meaning"]
+        style LE fill:#AF7AC5,stroke:#9B59B6,stroke-width:2px,color:#FFFFFF,font-size:14px
+        
+        Obs["📈 <b>Observation</b><br/><br/>Hemodynamic Data<br/>Vital Signs<br/>Lab Results"]
+        style Obs fill:#D7BDE2,stroke:#9B59B6,stroke-width:2px,color:#2C3E50,font-size:13px
+        
+        Proc["⚙️ <b>Procedure</b><br/><br/>Cath Lab Events<br/>Echo Studies<br/>Interventions"]
+        style Proc fill:#D7BDE2,stroke:#9B59B6,stroke-width:2px,color:#2C3E50,font-size:13px
+        
+        DR["📋 <b>DiagnosticReport</b><br/><br/>Echo Reports<br/>Study Results<br/>Interpretations"]
+        style DR fill:#D7BDE2,stroke:#9B59B6,stroke-width:2px,color:#2C3E50,font-size:13px
+        
+        Med["💊 <b>Medication</b><br/><br/>Cardiology Drugs<br/>Dosing Information<br/>Administration"]
+        style Med fill:#D7BDE2,stroke:#9B59B6,stroke-width:2px,color:#2C3E50,font-size:13px
+        
+        LE --> Obs
+        LE --> Proc
+        LE --> DR
+        LE --> Med
+    end
+
+    subgraph Physical["💾 PHYSICAL STORAGE LAYER"]
+        style Physical fill:#E67E22,stroke:#BA4A00,stroke-width:3px,color:#FFFFFF
+        DB["<b>Relational Database Tables</b><br/><br/>⚡ Transactional Performance<br/>📊 Analytical Queries<br/>🔒 Data Integrity<br/>🔄 Indexing & Optimization"]
+        style DB fill:#F39C12,stroke:#E67E22,stroke-width:2px,color:#FFFFFF,font-size:14px
+    end
+
+    subgraph Integration["🔗 INTEGRATION LAYER"]
+        style Integration fill:#27AE60,stroke:#1E8449,stroke-width:3px,color:#FFFFFF
+        
+        FHIR["🌐 <b>FHIR Resources</b><br/><br/>Patient<br/>Observation<br/>Procedure<br/>DiagnosticReport"]
+        style FHIR fill:#52BE80,stroke:#27AE60,stroke-width:2px,color:#FFFFFF,font-size:13px
+        
+        HL7["📡 <b>HL7 v2 Segments</b><br/><br/>OBX - Observations<br/>OBR - Orders<br/>MSH - Messages"]
+        style HL7 fill:#52BE80,stroke:#27AE60,stroke-width:2px,color:#FFFFFF,font-size:13px
+        
+        REST["🔌 <b>REST APIs</b><br/><br/>GET/POST/PUT<br/>JSON Payloads<br/>Modern Integrations"]
+        style REST fill:#52BE80,stroke:#27AE60,stroke-width:2px,color:#FFFFFF,font-size:13px
+    end
+
+    %% Data Flow Connections
+    ClinDoc -->|"Data Entry"| LE
+    Obs -->|"Normalized Data"| DB
+    Proc -->|"Normalized Data"| DB
+    DR -->|"Normalized Data"| DB
+    Med -->|"Normalized Data"| DB
+    
+    DB -->|"Transform to FHIR"| FHIR
+    DB -->|"Transform to HL7"| HL7
+    DB -->|"Expose via API"| REST
+
+    %% Flow Annotations
+    ClinDoc -.->|"1️⃣ Capture"| LE
+    LE -.->|"2️⃣ Structure"| DB
+    DB -.->|"3️⃣ Exchange"| FHIR
+
+```
+What this diagram shows: Clinical data enters through Cupid's user interface, is mapped to semantic data structures at the logical layer, stored efficiently in databases, and then exposed to external systems through multiple integration formats. A cardiac image result might flow from a radiologist's documentation → stored as a DICOM reference and DiagnosticReport object → then exposed to a PACS system via FHIR or HL7.
+---
+
+
+Diagram 2: Cardiac Data Model—Entities and Relationships
+
+
+```mermaid
+graph TB
+    subgraph Patient["👤 PATIENT LAYER"]
+        P["<b style='color:black'>PATIENT</b><br/><br/>Patient ID<br/>Date of Birth<br/>Demographics<br/>Medical Record Number"]
+    end
+
+    subgraph Encounter["🏥 CLINICAL ENCOUNTER LAYER"]
+        E["<b style='color:black'>ENCOUNTER</b><br/><br/>Encounter ID<br/>Visit Date/Time<br/>Visit Type<br/>Location"]
+        V["<b style='color:black'>VITAL SIGNS</b><br/><br/>Heart Rate<br/>Blood Pressure<br/>Respiratory Rate<br/>O2 Saturation<br/>Temperature"]
+    end
+
+    subgraph OrderMgmt["📋 ORDER MANAGEMENT LAYER"]
+        O["<b style='color:black'>ORDER</b><br/><br/>Order ID<br/>Order Date/Time<br/>Ordering Physician<br/>Clinical Indication<br/>Priority Level"]
+    end
+
+    subgraph ProcLayer["🔬 PROCEDURE LAYER"]
+        PR["<b style='color:black'>PROCEDURE</b><br/><br/>Procedure ID<br/>Procedure Type<br/>Start/End Time<br/>Performing Physician<br/>Location"]
+        PC["<b style='color:black'>PROCEDURE COMPONENT</b><br/><br/>Component Type<br/>Angiogram<br/>FFR Measurement<br/>Hemodynamics<br/>Echo Views"]
+    end
+
+    subgraph ResultLayer["📊 RESULTS & REPORTING LAYER"]
+        R["<b style='color:black'>RESULT</b><br/><br/>Measurement Values<br/>Stenosis Percentage<br/>Pressure Values<br/>Ejection Fraction<br/>Flow Values"]
+        RP["<b style='color:black'>DIAGNOSTIC REPORT</b><br/><br/>Report ID<br/>Final Interpretation<br/>Clinical Findings<br/>Recommendations<br/>Physician Signature"]
+    end
+
+    P -->|"1 to Many"| E
+    E -->|"Records"| V
+    E -->|"Generates"| O
+    E -->|"Associated With"| PR
+    O -->|"Fulfilled By"| RP
+    PR -->|"Contains"| PC
+    PC -->|"Produces"| R
+    R -->|"Compiled Into"| RP
+
+    style P fill:#FF6B6B,stroke:#C92A2A,stroke-width:4px,color:#FFFFFF
+    style E fill:#9B59B6,stroke:#6C3483,stroke-width:4px,color:#FFFFFF
+    style V fill:#3498DB,stroke:#1E5A8E,stroke-width:4px,color:#FFFFFF
+    style O fill:#F39C12,stroke:#B7700F,stroke-width:4px,color:#FFFFFF
+    style PR fill:#E67E22,stroke:#A85E1B,stroke-width:4px,color:#FFFFFF
+    style PC fill:#E74C3C,stroke:#A83128,stroke-width:4px,color:#FFFFFF
+    style R fill:#2ECC71,stroke:#1E8449,stroke-width:4px,color:#FFFFFF
+    style RP fill:#27AE60,stroke:#186A3B,stroke-width:4px,color:#FFFFFF
+
+    style Patient fill:#FFE6E6,stroke:#FF6B6B,stroke-width:3px
+    style Encounter fill:#F3E5F5,stroke:#9B59B6,stroke-width:3px
+    style OrderMgmt fill:#FFF3E0,stroke:#F39C12,stroke-width:3px
+    style ProcLayer fill:#FFE0D6,stroke:#E67E22,stroke-width:3px
+    style ResultLayer fill:#E8F8F5,stroke:#2ECC71,stroke-width:3px
+
+
+```
+Clinical meaning: When a patient comes for a cath procedure, a new Encounter is created. Within that encounter, vital signs are recorded (context for hemodynamics). The Procedure itself (cath lab) contains multiple components (angiography, FFR measurement, hemodynamic assessment). Each component generates Results (stenosis percentages, pressure measurements). All of this information is synthesized into a final DiagnosticReport.
+---
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'fontSize':'18px', 'fontFamily':'arial'}}}%%
+graph TB
+    subgraph Epic["<b>EPIC CUPID</b><br/>Logical Data Model"]
+        A1["<b>Patient ID</b><br/>Demographics & MRN"]
+        A2["<b>Encounter Reference</b><br/>Visit Context"]
+        A3["<b>Procedure Reference</b><br/>Order Details"]
+        A4["<b>Result Measurements</b><br/>Clinical Values"]
+    end
+
+    subgraph Bridge["<b>INTEGRATION LAYER</b><br/>Data Translation & Mapping"]
+        B1["<b>FHIR/HL7 Bridge</b><br/>Standards Conversion"]
+        B2["<b>Data Translation Engine</b><br/>Format Transformation"]
+        B3["<b>DiagnosticReport Mapping</b><br/>Clinical Context"]
+    end
+
+    subgraph PACS["<b>PACS SYSTEM</b><br/>Physical Image Storage"]
+        C1["<b>DICOM Objects</b><br/>Image Files"]
+        C2["<b>Image Metadata</b><br/>Study Information"]
+        C3["<b>Series/Study References</b><br/>Organizational Index"]
+    end
+
+    subgraph Device["<b>HEMODYNAMIC DEVICE</b><br/>Physical Data Storage"]
+        D1["<b>Pressure Waveforms</b><br/>Raw Measurements"]
+        D2["<b>Derived Values</b><br/>Calculated Results"]
+        D3["<b>Device-Specific Formats</b><br/>Proprietary Data"]
+    end
+
+    Epic -->|"<b>FHIR DiagnosticReport</b><br/>Clinical Context"| Bridge
+    Bridge -->|"<b>DICOM Query/Retrieve</b><br/>Image Access"| PACS
+    Bridge -->|"<b>HL7/FHIR Observation</b><br/>Result Mapping"| Device
+
+    style Epic fill:#0288D1,stroke:#01579B,stroke-width:4px,color:#FFFFFF
+    style Bridge fill:#7B1FA2,stroke:#4A148C,stroke-width:4px,color:#FFFFFF
+    style PACS fill:#F57C00,stroke:#E65100,stroke-width:4px,color:#FFFFFF
+    style Device fill:#388E3C,stroke:#1B5E20,stroke-width:4px,color:#FFFFFF
+
+    style A1 fill:#4FC3F7,stroke:#0277BD,stroke-width:3px,color:#000000
+    style A2 fill:#4FC3F7,stroke:#0277BD,stroke-width:3px,color:#000000
+    style A3 fill:#4FC3F7,stroke:#0277BD,stroke-width:3px,color:#000000
+    style A4 fill:#4FC3F7,stroke:#0277BD,stroke-width:3px,color:#000000
+
+    style B1 fill:#BA68C8,stroke:#6A1B9A,stroke-width:3px,color:#000000
+    style B2 fill:#BA68C8,stroke:#6A1B9A,stroke-width:3px,color:#000000
+    style B3 fill:#BA68C8,stroke:#6A1B9A,stroke-width:3px,color:#000000
+
+    style C1 fill:#FFB74D,stroke:#EF6C00,stroke-width:3px,color:#000000
+    style C2 fill:#FFB74D,stroke:#EF6C00,stroke-width:3px,color:#000000
+    style C3 fill:#FFB74D,stroke:#EF6C00,stroke-width:3px,color:#000000
+
+    style D1 fill:#81C784,stroke:#2E7D32,stroke-width:3px,color:#000000
+    style D2 fill:#81C784,stroke:#2E7D32,stroke-width:3px,color:#000000
+    style D3 fill:#81C784,stroke:#2E7D32,stroke-width:3px,color:#000000
+
+
+```
+What's happening: Cupid's data model stores the semantic meaning of cardiac data (what procedure, what results, what clinical context). When a cardiologist needs the actual image files or raw waveform data from hemodynamic devices, the integration layer translates Cupid's logical model into formats that PACS systems and devices understand. The bridge ensures that different systems can communicate about the same clinical data even though they store it differently.
+
+---
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#e3f2fd','primaryTextColor':'#000','primaryBorderColor':'#1976d2','lineColor':'#424242','secondaryColor':'#fff3e0','tertiaryColor':'#e8f5e9'}}}%%
+graph TB
+    Entry["<b>📝 DATA ENTRY EVENT</b><br/><br/>Clinician records measurement<br/>in the system"]
+    
+    Validate["<b>🔍 VALIDATION LAYER</b><br/><br/>Automated Checks Applied:<br/>✓ Required fields present?<br/>✓ Value within expected range?<br/>✓ Units valid?<br/>✓ Datetime in logical sequence?"]
+    
+    Branch{<b>Validation<br/>Result?</b>}
+    
+    Pass["<b>✅ ACCEPTED</b><br/><br/>Status: Final/Preliminary<br/>Audit trail created<br/>Timestamped & logged<br/>Available for clinical use"]
+    
+    Fail["<b>❌ REJECTED</b><br/><br/>Error logged with details<br/>Clinician notified immediately<br/>Correction required<br/>Data not stored"]
+    
+    Entry -->|Submit| Validate
+    Validate -->|Process| Branch
+    Branch -->|Pass| Pass
+    Branch -->|Fail| Fail
+    
+    style Entry fill:#4fc3f7,stroke:#01579b,stroke-width:4px,color:#000
+    style Validate fill:#ffb74d,stroke:#e65100,stroke-width:4px,color:#000
+    style Pass fill:#66bb6a,stroke:#1b5e20,stroke-width:4px,color:#000
+    style Fail fill:#ef5350,stroke:#b71c1c,stroke-width:4px,color:#fff
+    style Branch fill:#ffd54f,stroke:#f57f17,stroke-width:4px,color:#000
+
+
+```
+Clinical significance: Cupid's data model enforces clinical validity. You can't record a diastolic BP higher than systolic, can't record a procedure on a future date, can't enter a measurement without a datetime. These constraints—built into the data model—protect downstream analytics quality and prevent the "garbage in, garbage out" problem that undermines decision support systems.
+---
+Key Concepts Defined
+Here's a table format with visual elements for the key concepts:
+
+| **🔷 Concept** | **📝 Definition** | **💡 Example** |
+| --- | --- | --- |
+| **🗂️ Semantic Data Model** | Data structure capturing clinical meaning and context, not just values | Heart rate: 72 bpm (monitor, at rest, regular rhythm) |
+| **🔗 Entity-Relationship Model** | Database design with entities connected through clinical relationships | Patient → Encounter → Procedure (modular and flexible) |
+| **🧠 Logical Data Model** | Conceptual representation independent of physical storage | Different hospitals, same understanding of "Observation" |
+| **💾 Physical Data Model** | Actual database tables, columns, and indexes | Optimized for real-time transactions and analytics |
+| **🔄 FHIR** | HL7 standard for healthcare data interoperability | Patient, Observation, DiagnosticReport resources |
+| **🖼️ DICOM** | International standard for medical imaging | Echo, angiography, CT, MRI images + metadata |
+| **🔀 Integration Mapping** | Translating data between different data models | Cupid data → DICOM format for PACS |
+| **🔢 Cardinality** | Relationship types: 1:1, 1:N, or N:N | One patient → many encounters (1:N) |
+| **🛡️ Data Integrity Constraint** | Rules preventing impossible or inconsistent data | Discharge date cannot precede admission date |
+| **📋 Audit Trail** | Record of data access and modifications | Who, when, what changed (HIPAA compliance) |
+
+---
+## Application of Key Concepts: Cardiac Data Modeling in Practice
+
+Real-World Example: Catheterization Lab Hemodynamic Data
+Imagine a cardiologist performs a diagnostic catheterization and measures hemodynamic pressures. Let's trace how this clinical data flows through Cupid's data model:
+Clinical Event: Cardiologist measures RA (right atrial) pressure = 8 mmHg during baseline phase of catheterization
+What Gets Captured in Cupid's Data Model:
+---
+**Why Each Element Matters for Consulting**:
+
+Here's the data formatted as a table with icons for better visual clarity:
+
+| **📋 Element** | **💡 Value** | **🎯 Why It Matters** |
+| --- | --- | --- |
+| 🔍 Entity Type | Observation | Cupid knows this is a measurement, not a narrative or image |
+| 🏷️ Observation Code | LAB-0423 (Right Atrial Pressure) | Standardized code enables analytics—all "RA pressure" values are coded consistently |
+| 🔢 Numeric Value | 8 | The actual measurement |
+| 📏 Unit | mmHg | Pressure measurement context |
+| 📊 Reference Range | 2-8 mmHg | Validates if value is clinically reasonable; system can flag abnormal |
+| 🔬 Measurement Method | Fluid-filled catheter transducer | Different methods (pressure wire vs. transducer) may have different accuracy |
+| ⏰ Recording DateTime | 2024-11-30 14:23:15 | Precise timing enables sequencing (was this before/after nitroglycerin?) |
+| 🏥 Procedure Context | Diagnostic Right Heart Catheterization | Links this measurement to a specific procedure—essential for understanding hemodynamic state |
+| 👤 Relation to Patient | Patient ID: 12345678 | Links to medical record |
+| 🎫 Relation to Encounter | Encounter ID: 98765432 | Links to hospital visit context |
+| ✅ Status | Final | Indicates this measurement has been verified and is available for clinical use |
+| 👨‍⚕️ Clinician Recording | Dr. Smith (Provider ID: 54321) | Accountability; clinician can later modify if needed |
+| 📝 Audit Trail | DateTime, user, action | Compliance audit trail |
+
+---
+Why Each Element Matters for Consulting:
+
+Standardized codes: When you integrate with a PACS or populate a national registry (e.g., Society for Cardiac Angiography and Interventions registry), standardized codes ensure data quality. A consultant must understand coding requirements for regulatory reporting.
+Temporal logic: Hemodynamic data is meaningless without temporal context. Baseline RA pressure of 8 mmHg might be normal, but if it was 8 mmHg after nitroglycerin, that might suggest baseline elevation. A consultant evaluating EHR design must ensure timestamp precision is sufficient for clinical interpretation.
+Measurement method: Device accuracy matters. An optical pulse oximetry reading differs from arterial line monitoring. The data model must distinguish these because clinical interpretation differs. A consultant recommends data model design that prevents method confusion.
+Audit trail: In a cath lab, if a hemodynamic value is later corrected (clinician realizes wrong pressure transducer was used), the audit trail must show the original value and the correction. Healthcare IT consulting requires understanding compliance implications of data modification policies.
+
+Integration Challenge: When this hemodynamic data must be shared with the PACS system or an external cardiac registry, Cupid's integration layer maps this logical structure to FHIR Observation format:
+---
+{
+  "resourceType": "Observation",
+  "id": "hemodynamic-ra-pressure-001",
+  "subject": {
+    "reference": "Patient/12345678"
+  },
+  "encounter": {
+    "reference": "Encounter/98765432"
+  },
+  "code": {
+    "coding": [{
+      "system": "http://loinc.org",
+      "code": "3289-8",
+      "display": "Right Atrial Pressure"
+    }]
+  },
+  "effectiveDateTime": "2024-11-30T14:23:15Z",
+  "valueQuantity": {
+    "value": 8,
+    "unit": "mmHg"
+  },
+  "status": "final",
+  "method": {
+    "coding": [{
+      "display": "Fluid-filled catheter transducer"
+    }]
+  },
+  "performer": [{
+    "reference": "Practitioner/54321"
+  }]
+}
