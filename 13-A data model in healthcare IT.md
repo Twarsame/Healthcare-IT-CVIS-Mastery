@@ -6,7 +6,8 @@ Module 2: Epic EHR Architecture Fundamentals
 Lesson Duration: 90 minutes | Complexity Level: Intermediate-Advanced
 Target Audience: Clinical informaticists transitioning to healthcare IT consulting
 
-Executive Summary
+## Executive Summary
+
 Epic Cupid's data model architecture represents a healthcare-specific approach to structuring clinical information that fundamentally differs from general-purpose EHR systems. Rather than treating data as isolated transactional records, Cupid implements a semantically rich data architecture designed to capture the clinical context necessary for evidence-based decision-making. For cardiovascular informatics, this architectural approach is critical: Cupid structures cardiac data (hemodynamic measurements, procedural events, imaging metadata) in ways that preserve clinical meaning while enabling interoperability with PACS systems, hemodynamic devices, and downstream analytics platforms.
 This lesson bridges your clinical cardiology knowledge with technical architectural principles. As a cardiovascular professional transitioning to consulting, understanding how Cupid structures cardiac data—and why it structures it that way—will differentiate you as a consultant who can advise on system design decisions, workflow optimization, and vendor evaluation, rather than simply implementing configuration changes.
 Key Learning Outcome: You will understand how Cupid's data model architecture supports cardiac workflows, enables PACS integration, and provides the technical foundation for clinical decision support systems—positioning you to evaluate architectural fit and recommend optimization strategies.
@@ -1239,37 +1240,146 @@ Standardized codes: When you integrate with a PACS or populate a national regist
 Temporal logic: Hemodynamic data is meaningless without temporal context. Baseline RA pressure of 8 mmHg might be normal, but if it was 8 mmHg after nitroglycerin, that might suggest baseline elevation. A consultant evaluating EHR design must ensure timestamp precision is sufficient for clinical interpretation.
 Measurement method: Device accuracy matters. An optical pulse oximetry reading differs from arterial line monitoring. The data model must distinguish these because clinical interpretation differs. A consultant recommends data model design that prevents method confusion.
 Audit trail: In a cath lab, if a hemodynamic value is later corrected (clinician realizes wrong pressure transducer was used), the audit trail must show the original value and the correction. Healthcare IT consulting requires understanding compliance implications of data modification policies.
-
-Integration Challenge: When this hemodynamic data must be shared with the PACS system or an external cardiac registry, Cupid's integration layer maps this logical structure to FHIR Observation format:
 ---
-{
-  "resourceType": "Observation",
-  "id": "hemodynamic-ra-pressure-001",
-  "subject": {
-    "reference": "Patient/12345678"
-  },
-  "encounter": {
-    "reference": "Encounter/98765432"
-  },
-  "code": {
-    "coding": [{
-      "system": "http://loinc.org",
-      "code": "3289-8",
-      "display": "Right Atrial Pressure"
-    }]
-  },
-  "effectiveDateTime": "2024-11-30T14:23:15Z",
-  "valueQuantity": {
-    "value": 8,
-    "unit": "mmHg"
-  },
-  "status": "final",
-  "method": {
-    "coding": [{
-      "display": "Fluid-filled catheter transducer"
-    }]
-  },
-  "performer": [{
-    "reference": "Practitioner/54321"
-  }]
-}
+
+## Integration Challenge: Cupid Logical Layer to FHIR Mapping
+
+When hemodynamic data must be shared with PACS systems or external cardiac registries, Cupid's integration layer maps the logical structure to FHIR Observation format. Here's a visual representation of how the information flows:
+
+---
+```mermaid
+graph TB
+    subgraph Cupid["🏥 CUPID LOGICAL LAYER"]
+        A["<b>📊 HEMODYNAMIC<br/>MEASUREMENT</b><br/>━━━━━━━━━━━━<br/>RA Pressure: 8 mmHg<br/>DateTime: 2024-11-30<br/>Status: Final"]
+        B["<b>👤 PATIENT<br/>CONTEXT</b><br/>━━━━━━━━━━━━<br/>Patient ID: 12345678<br/>Demographics Linked"]
+        C["<b>🏥 ENCOUNTER<br/>CONTEXT</b><br/>━━━━━━━━━━━━<br/>Encounter ID: 98765432<br/>Cardiac Cath Lab"]
+        D["<b>👨‍⚕️ PERFORMER<br/>DATA</b><br/>━━━━━━━━━━━━<br/>Practitioner: 54321<br/>Cardiologist"]
+        E["<b>🔬 METHOD<br/>DETAILS</b><br/>━━━━━━━━━━━━<br/>Fluid-filled catheter<br/>Calibrated transducer"]
+    end
+
+    subgraph Integration["⚙️ INTEGRATION LAYER"]
+        F["<b>🔄 FHIR<br/>MAPPER</b><br/>━━━━━━━━━━━━<br/>Transform Cupid<br/>objects to FHIR"]
+        G["<b>📋 DATA<br/>VALIDATION</b><br/>━━━━━━━━━━━━<br/>Validate against<br/>FHIR profiles"]
+        H["<b>🔐 SECURITY &<br/>AUTH</b><br/>━━━━━━━━━━━━<br/>OAuth 2.0<br/>Access control"]
+    end
+
+    subgraph FHIR["📤 FHIR OBSERVATION RESOURCE"]
+        I["<b>🏷️ RESOURCE<br/>TYPE</b><br/>━━━━━━━━━━━━<br/>Observation"]
+        J["<b>📊 CODE</b><br/>━━━━━━━━━━━━<br/>LOINC: 3289-8<br/>RA Pressure"]
+        K["<b>📈 VALUE</b><br/>━━━━━━━━━━━━<br/>8 mmHg<br/>Quantity"]
+        L["<b>👤 SUBJECT</b><br/>━━━━━━━━━━━━<br/>Patient/12345678"]
+        M["<b>🏥 ENCOUNTER</b><br/>━━━━━━━━━━━━<br/>Encounter/98765432"]
+        N["<b>👨‍⚕️ PERFORMER</b><br/>━━━━━━━━━━━━<br/>Practitioner/54321"]
+        O["<b>✅ STATUS</b><br/>━━━━━━━━━━━━<br/>final"]
+        P["<b>📅 TIME</b><br/>━━━━━━━━━━━━<br/>2024-11-30T14:23:15Z"]
+    end
+
+    subgraph External["🌐 EXTERNAL SYSTEMS"]
+        Q["<b>📸 PACS<br/>SYSTEM</b><br/>━━━━━━━━━━━━<br/>Image Management<br/>Hemodynamic overlays"]
+        R["<b>📊 CARDIAC<br/>REGISTRY</b><br/>━━━━━━━━━━━━<br/>National Database<br/>Quality Metrics"]
+        S["<b>🏥 EHR<br/>SYSTEMS</b><br/>━━━━━━━━━━━━<br/>Epic, Cerner<br/>Clinical Docs"]
+        T["<b>📈 ANALYTICS<br/>PLATFORM</b><br/>━━━━━━━━━━━━<br/>Research Data<br/>Population Health"]
+    end
+
+    A -.->|"Measurement Data"| F
+    B -.->|"Patient Info"| F
+    C -.->|"Encounter Info"| F
+    D -.->|"Provider Info"| F
+    E -.->|"Method Info"| F
+    
+    F ==>|"Transform"| G
+    G ==>|"Validate"| H
+    
+    H ==>|"Create"| I
+    I -->|"Code"| J
+    I -->|"Value"| K
+    I -->|"Subject"| L
+    I -->|"Encounter"| M
+    I -->|"Performer"| N
+    I -->|"Status"| O
+    I -->|"Time"| P
+    
+    J ==>|"Send"| Q
+    K ==>|"Send"| Q
+    L ==>|"Send"| R
+    M ==>|"Send"| R
+    N ==>|"Send"| S
+    O ==>|"Send"| S
+    P ==>|"Send"| T
+    K ==>|"Send"| T
+
+    %% Styling for Cupid Logical Layer
+    style Cupid fill:#00897B,stroke:#004D40,stroke-width:5px,color:#FFFFFF
+    style A fill:#26A69A,stroke:#00897B,stroke-width:4px,color:#FFFFFF
+    style B fill:#26A69A,stroke:#00897B,stroke-width:4px,color:#FFFFFF
+    style C fill:#26A69A,stroke:#00897B,stroke-width:4px,color:#FFFFFF
+    style D fill:#26A69A,stroke:#00897B,stroke-width:4px,color:#FFFFFF
+    style E fill:#26A69A,stroke:#00897B,stroke-width:4px,color:#FFFFFF
+    
+    %% Styling for Integration Layer
+    style Integration fill:#F57C00,stroke:#E65100,stroke-width:5px,color:#FFFFFF
+    style F fill:#FF9800,stroke:#F57C00,stroke-width:4px,color:#FFFFFF
+    style G fill:#FF9800,stroke:#F57C00,stroke-width:4px,color:#FFFFFF
+    style H fill:#FF9800,stroke:#F57C00,stroke-width:4px,color:#FFFFFF
+    
+    %% Styling for FHIR Resource
+    style FHIR fill:#1565C0,stroke:#0D47A1,stroke-width:5px,color:#FFFFFF
+    style I fill:#1E88E5,stroke:#1565C0,stroke-width:4px,color:#FFFFFF
+    style J fill:#42A5F5,stroke:#1976D2,stroke-width:4px,color:#000000
+    style K fill:#42A5F5,stroke:#1976D2,stroke-width:4px,color:#000000
+    style L fill:#42A5F5,stroke:#1976D2,stroke-width:4px,color:#000000
+    style M fill:#42A5F5,stroke:#1976D2,stroke-width:4px,color:#000000
+    style N fill:#42A5F5,stroke:#1976D2,stroke-width:4px,color:#000000
+    style O fill:#42A5F5,stroke:#1976D2,stroke-width:4px,color:#000000
+    style P fill:#42A5F5,stroke:#1976D2,stroke-width:4px,color:#000000
+    
+    %% Styling for External Systems
+    style External fill:#6A1B9A,stroke:#4A148C,stroke-width:5px,color:#FFFFFF
+    style Q fill:#8E24AA,stroke:#6A1B9A,stroke-width:4px,color:#FFFFFF
+    style R fill:#8E24AA,stroke:#6A1B9A,stroke-width:4px,color:#FFFFFF
+    style S fill:#8E24AA,stroke:#6A1B9A,stroke-width:4px,color:#FFFFFF
+    style T fill:#8E24AA,stroke:#6A1B9A,stroke-width:4px,color:#FFFFFF
+
+```
+
+### Key Components Explained
+
+- **Cupid Logical Layer (Blue):** Contains the clinical data in Cupid's native format with full clinical context, including the measurement, patient, encounter, performer, and method details.
+- **Integration Layer (Orange):** Handles the transformation process through FHIR mapping, data validation against FHIR profiles, and security/authentication using OAuth 2.0 and SMART on FHIR standards.
+- **FHIR Observation Resource (Green):** The standardized FHIR format with all required elements including resource type, standardized codes (LOINC), measured values, references to patient/encounter/performer, status, and effective datetime.
+- **External Systems (Purple):** The destination systems that consume the FHIR data, including PACS for image management, cardiac registries for quality metrics, EHR systems for clinical documentation, and analytics platforms for research.
+
+### Information Flow
+
+The diagram shows how clinical data flows from Cupid's logical layer through the integration layer's transformation and validation processes, resulting in standardized FHIR resources that can be consumed by multiple external systems simultaneously. Each arrow represents a data transformation or transmission step, ensuring clinical validity is maintained throughout the entire integration pipeline.
+
+---
+## Application Case Scenario
+
+Scenario: Cath Lab Workflow and PACS Integration Challenge
+Setting: Mid-sized academic medical center, 45 cath labs performing 12,000+ catheterizations annually. Recently implemented Epic Cupid and are integrating a new PACS system.
+Clinical Workflow:
+
+Patient arrives for diagnostic right heart catheterization (pulmonary hypertension workup)
+Cardiologist records baseline vitals: HR 78, BP 126/82, O2 sat 97%
+Procedure begins; hemodynamic measurements taken: RA 7 mmHg, RV 42/5, PA 62/28, PCWP 24 (indicating elevated filling pressures)
+Procedure includes cardiac angiography; fluoroscopy images stored in PACS
+Cardiologist documents final impression: "Findings consistent with Group 2 Pulmonary Hypertension secondary to left heart disease"
+
+The Data Modeling Challenge:
+The Quality Improvement Committee has asked you (as the new informatics consultant) to evaluate why hemodynamic data is sometimes missing from the cardiac summary reports sent to referring providers. You discover:
+
+Semantic Model Issue: Cupid stores hemodynamic pressures as individual "Observation" entities (separate records for RA, RV, PA, PCWP), but the interface used by referring providers expects a "HemodynamicAssessment" document that should contain all four pressures together with clinical interpretation. The data model captures the values but loses the clinical grouping.
+Integration Mapping Issue: When the PACS system queries Cupid for procedure context, it receives RA pressure via FHIR Observation, but the other pressures aren't in the standard FHIR query response because they're stored in a different Cupid table (accessed differently than laboratory results). The PACS integration map wasn't designed to retrieve all hemodynamic components.
+Temporal Logic Issue: The vital signs (HR 78, BP 126/82) were recorded as baseline vital signs in the Cupid Vital Signs module. The hemodynamic pressures were recorded in the Procedure Results module. Different datetime stamps cause confusion—was the elevated PCWP (24) recorded during baseline assessment or after nitroglycerin? The data model didn't enforce that hemodynamic measurements should be explicitly linked to a procedure phase (baseline, post-medication, post-intervention).
+Status and Completeness Issue: Some pressures are recorded as "preliminary" (taken at the bedside during procedure) and later amended to "final" (after review). The referring provider report was pulling preliminary values before final values were available, creating outdated summaries.
+
+Your Consulting Recommendations (applying data model knowledge):
+
+Logical Model Enhancement: Create a "HemodynamicAssessment" entity that groups related measurements (RA, RV, PA, PCWP, cardiac output, resistance calculations) as a coherent clinical concept. This semantic change makes the data model reflect how cardiologists actually think about hemodynamic data (as a comprehensive assessment, not isolated measurements).
+Integration Mapping Redesign: Update the PACS integration map to retrieve not just individual pressures but the complete HemodynamicAssessment, ensuring PACS and referring provider systems receive consistent, complete data.
+Procedure Phase Data Model: Add explicit "procedure phase" coding to each hemodynamic measurement (baseline, post-preload, post-medication, post-intervention, post-recovery), making temporal context part of the data model itself rather than relying on clinician interpretation of timestamps.
+Status Management Policy: Implement a data model rule that "final" status measurements are prioritized over "preliminary" in all reporting queries, preventing outdated preliminary values from appearing in clinical summaries.
+
+Business Impact: These data model changes reduce incomplete reporting incidents by 87% (measured by chart audits), improve referring provider confidence in Cupid-provided hemodynamic summaries, and create a foundation for downstream analytics (population-level pulmonary hypertension phenotyping becomes possible when hemodynamic assessments are semantically coherent).
+Consulting Implication: This scenario shows why data model understanding is a consultant-level skill. Configuration-level staff might "add a field for procedure phase," but a consultant redesigns the semantic model to reflect clinical reality, improving the system's ability to capture meaning and support downstream analytics. This is differentiation in consulting.
