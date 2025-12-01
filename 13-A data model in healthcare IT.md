@@ -1,28 +1,22 @@
-## Lesson 2.2: Epic Cupid Data Models
 
----
+## Lesson 2.2: Epic Cupid Data Models
 
 Cardiac-Specific Data Architecture and PACS Integration
 Module 2: Epic EHR Architecture Fundamentals
 Lesson Duration: 90 minutes | Complexity Level: Intermediate-Advanced
 Target Audience: Clinical informaticists transitioning to healthcare IT consulting
----
+
 Executive Summary
 Epic Cupid's data model architecture represents a healthcare-specific approach to structuring clinical information that fundamentally differs from general-purpose EHR systems. Rather than treating data as isolated transactional records, Cupid implements a semantically rich data architecture designed to capture the clinical context necessary for evidence-based decision-making. For cardiovascular informatics, this architectural approach is critical: Cupid structures cardiac data (hemodynamic measurements, procedural events, imaging metadata) in ways that preserve clinical meaning while enabling interoperability with PACS systems, hemodynamic devices, and downstream analytics platforms.
 This lesson bridges your clinical cardiology knowledge with technical architectural principles. As a cardiovascular professional transitioning to consulting, understanding how Cupid structures cardiac data—and why it structures it that way—will differentiate you as a consultant who can advise on system design decisions, workflow optimization, and vendor evaluation, rather than simply implementing configuration changes.
 Key Learning Outcome: You will understand how Cupid's data model architecture supports cardiac workflows, enables PACS integration, and provides the technical foundation for clinical decision support systems—positioning you to evaluate architectural fit and recommend optimization strategies.
----
+
 Key Concepts
+
 1. Data Model Definition and Strategic Importance
 A data model in healthcare IT is the architectural blueprint that defines how clinical information is stored, organized, retrieved, and exchanged across systems. Unlike a database schema (the technical structure), a data model is the semantic representation—it codifies "what information is important, how it relates to other information, and what constraints ensure clinical validity."
 For healthcare consulting, understanding data models is essential because:
-
-Clinical Validity: A poorly designed data model may allow clinically impossible data states (e.g., recording systolic BP < diastolic BP), leading to downstream analytics errors
-Interoperability: Data models determine which information can be exchanged with external systems like PACS or cardiology devices
-Performance: Model design choices impact query performance in real-time clinical dashboards and population health analytics
-Regulatory Compliance: Audit trail requirements, data integrity constraints, and retention rules are enforced through data model design
-
-
+Clinical Validity: A poorly designed data model may allow clinically impossible data states (e.g., recording systolic BP < diastolic BP), leading to downstream analytics errors Interoperability: Data models determine which information can be exchanged with external systems like PACS or cardiology devices Performance: Model design choices impact query performance in real-time clinical dashboards and population health analytics Regulatory Compliance: Audit trail requirements, data integrity constraints, and retention rules are enforced through data model design
 ---
 ### Data Model Architecture
 
