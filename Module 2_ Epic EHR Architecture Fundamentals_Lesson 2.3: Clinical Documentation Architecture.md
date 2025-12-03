@@ -2306,3 +2306,73 @@ flowchart LR
 - ⚡ **Efficiency** – Dropdown menus reduce documentation time
 - 🎓 **Standardization** – Everyone documents the same way
 </aside>
+---
+
+
+
+| **Challenge** | **Cupid Approach** | **Consulting Consideration** |
+| --- | --- | --- |
+| ⏱️ Real-time data during procedure | Cupid stores timestamps but doesn't capture live hemodynamic waveforms in real-time; waveforms captured via integration with cath lab equipment | Clients must decide: will they integrate cath equipment directly (high complexity) or capture waveforms as images + manual interpretation (lower fidelity)? |
+| 📅 Procedure timeline complexity | Cupid templates can structure phases (access, baseline hemo, intervention, closure) but tracking exact minute-by-minute progression is challenging | Best practice: document key procedure phases and key decision points, not every millisecond |
+| 🔁 Repeating measurement blocks | Cupid's repeating sections work well for 2-3 measurement timepoints; beyond that, becomes unwieldy | For high-frequency measurement data (e.g., continuous monitoring), integration with cath lab systems is preferable to manual Cupid entry |
+| 🧮 Calculated indices from measurements | Cupid can auto-calculate (e.g., SVR from pressures + CO), but accuracy depends on correct measurement entry | Validation rules important: if CO entered is physiologically implausible, flag it before calculation propagates downstream |
+
+---
+Here's a visual redesign of the hemodynamic measurement interface with vivid colors and icons:
+
+```
+🫀 HEMODYNAMIC DATA - BASELINE
+════════════════════════════════════════════════════════════
+
+⏰ Measurement Time: 14:23  
+   ⚙️ Auto-captured • Click to override
+
+┌──────────────────────────────────────────────────────────┐
+│  📍 PRESSURE READINGS                                     │
+│  ┌────────────────────────────────────────────────────┐  │
+│  │  Location: [🔽 LV (Left Ventricle)]              │  │
+│  └────────────────────────────────────────────────────┘  │
+│                                                           │
+│  🔴 Systolic:   [145] mmHg                               │
+│  🔵 Diastolic:  [15]  mmHg                               │
+│  🟢 Mean:       [67]  mmHg  ✨ Auto-calculated          │
+│                                                           │
+│  ┌──────────────────────────────────────┐                │
+│  │  ➕ Add Another Measurement Site     │                │
+│  └──────────────────────────────────────┘                │
+└──────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────┐
+│  🧮 CALCULATED INDICES                                    │
+│  ┌────────────────────────────────────────────────────┐  │
+│  │  💓 Cardiac Output:  [5.2] L/min                  │  │
+│  │     (Enter Thermodilution or Fick CO)              │  │
+│  │                                                     │  │
+│  │  📊 SVR: [1,056] mmHg/min/L  ✨ Auto-calculated   │  │
+│  │     Formula: (MAP - RAP) / CO × 80                 │  │
+│  └────────────────────────────────────────────────────┘  │
+└──────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────┐
+│  📝 OPERATOR NOTES                                        │
+│  ┌────────────────────────────────────────────────────┐  │
+│  │                                                     │  │
+│  │  [Narrative field for observations...]             │  │
+│  │                                                     │  │
+│  └────────────────────────────────────────────────────┘  │
+└──────────────────────────────────────────────────────────┘
+
+```
+
+Key visual improvements:
+
+- 🫀 Heart icon for the main heading
+- ⏰ Time icon with gear symbol for automatic timestamp
+- 📍 Location pin for measurement site
+- Color-coded pressure readings: 🔴 Systolic, 🔵 Diastolic, 🟢 Mean
+- ✨ Sparkle icon to highlight auto-calculated values
+- 🧮 Calculator icon for computed indices section
+- 💓 Heart rate symbol for cardiac output
+- 📊 Chart icon for SVR
+- 📝 Notes icon for documentation area
+- Clear boxed sections with borders to separate different data types
