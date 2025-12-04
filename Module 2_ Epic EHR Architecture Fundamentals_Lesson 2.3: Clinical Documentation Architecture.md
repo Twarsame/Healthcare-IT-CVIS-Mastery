@@ -2376,3 +2376,259 @@ Key visual improvements:
 - 📊 Chart icon for SVR
 - 📝 Notes icon for documentation area
 - Clear boxed sections with borders to separate different data types
+---
+C. EP/DEVICE MANAGEMENT: Time-Series and Device-State Architecture
+3C.1 Clinical Workflow Review (Bridge from Module 2.2)
+EP/device management encompasses:
+
+Device implantation → Pacemaker, ICD, CRT-D placement; documentation of lead position, threshold testing, programming
+Device interrogation → Periodic assessment (in-office or remote); capture of device settings, measured parameters, detected arrhythmias
+EP ablation → Real-time mapping and ablation; documentation of target sites, ablation lesions, outcomes
+Device troubleshooting → Analysis of detected events; interpretation of electrograms; programming adjustments
+
+The key architectural challenge: EP/device procedures generate continuous or near-continuous data streams that must be captured with precise temporal relationships.
+3C.2 Data Architecture: Time-Series with Device State
+
+
+```mermaid
+graph TD
+    A["🏥 Device Management Encounter<br/>(Interrogation, Implant, Ablation)"]
+    B["📊 Device Data Stream<br/>(Time-indexed measurements)"]
+    C["💓 Vital Sign Parameter<br/>(HR, Rhythm, at timestamp T)"]
+    D["⚙️ Device Setting<br/>(Pacing mode, Rate, AV delay, at timestamp T)"]
+    E["📈 Measured Value<br/>(Lead impedance, Threshold, Amplitude, at timestamp T)"]
+    F["⚡ Electrogram Event<br/>(Detected rhythm, timestamp, duration, rate, classification)"]
+    G["📉 Electrogram Waveform<br/>(Image/data reference, 12-lead interpretation)"]
+    H["🔥 Ablation Event<br/>(Site, timestamp, RF duration, power, temperature)"]
+    I["📋 Electrogram Pre-Ablation<br/>(Baseline rhythm at target)"]
+    J["✅ Electrogram Post-Ablation<br/>(Rhythm after lesion, acute success indicator)"]
+    K["🔄 Programming Change<br/>(Parameter changed, old value, new value, timestamp, clinical rationale)"]
+    
+    A -->|Contains| B
+    B -->|Contains| C
+    B -->|Contains| D
+    B -->|Contains| E
+    A -->|Contains| F
+    F -->|Contains| G
+    A -->|Contains| H
+    H -->|Contains| I
+    H -->|Contains| J
+    A -->|Contains| K
+    
+    style A fill:#1a237e,stroke:#000,stroke-width:4px,color:#ffffff
+    style B fill:#ff6f00,stroke:#000,stroke-width:3px,color:#ffffff
+    style C fill:#ff6f00,stroke:#000,stroke-width:3px,color:#ffffff
+    style D fill:#ff6f00,stroke:#000,stroke-width:3px,color:#ffffff
+    style E fill:#ff6f00,stroke:#000,stroke-width:3px,color:#ffffff
+    style F fill:#6a1b9a,stroke:#000,stroke-width:3px,color:#ffffff
+    style G fill:#6a1b9a,stroke:#000,stroke-width:3px,color:#ffffff
+    style H fill:#c62828,stroke:#000,stroke-width:3px,color:#ffffff
+    style I fill:#c62828,stroke:#000,stroke-width:3px,color:#ffffff
+    style J fill:#c62828,stroke:#000,stroke-width:3px,color:#ffffff
+    style K fill:#2e7d32,stroke:#000,stroke-width:3px,color:#ffffff
+
+
+```
+Architectural characteristic: This is the most time-sensitive of the three modalities. A single-second difference in timing can change the clinical interpretation of an electrogram event.
+3C.3 Cupid Template Architecture for Device Interrogation
+---
+## Step-by-Step Diagram Explanation: Device Interrogation Template Architecture
+
+### 🏥 Main Template Node (Top Level)
+
+The diagram starts with the primary template header **"Device Interrogation / Implant"** represented in deep navy blue. This is the root node that branches into all major sections of the device encounter documentation.
+
+### 📱 Section 1: Device Information (Blue Branch)
+
+**Purpose:** Captures basic device identification
+
+**Visual indicator:** Bright blue color (#0277bd)
+
+**Icon:** 📱 Mobile device symbol
+
+**Contains:**
+
+- Device Type (Pacemaker, ICD, CRT-D dropdown options)
+- Device Model and Serial Number
+- Implant Date (historical reference)
+- Last Interrogation Date (tracking follow-up intervals)
+
+### ⚙️ Section 2: Current Settings (Red-Orange Branch)
+
+**Purpose:** Records device programming parameters at time of interrogation
+
+**Visual indicator:** Red-orange color (#d84315)
+
+**Icon:** ⚙️ Gear symbol representing settings
+
+**Contains:**
+
+- Pacing Mode (AAI, VVI, DDD selections)
+- Base Rate in beats per minute
+- AV Delay and VV Delay in milliseconds
+- Sensor status (on/off)
+- Additional device-specific parameters
+
+### 🔌 Section 3: Lead Information (Purple Branch)
+
+**Purpose:** Documents electrical performance of each lead
+
+**Visual indicator:** Purple color (#7b1fa2)
+
+**Icon:** 🔌 Plug symbol representing electrical connections
+
+**Contains (for each lead - RA, RV, LV, CS):**
+
+- Lead Position (anatomical location)
+- Pacing Threshold (voltage and pulse width)
+- Pacing Amplitude (output voltage)
+- Sensing Amplitude (detected signal strength)
+- Lead Impedance (electrical resistance)
+- Lead Model/Name
+
+### 📊 Section 4: Measured Parameters (Teal Branch)
+
+**Purpose:** Displays device-collected diagnostic data
+
+**Visual indicator:** Teal color (#00695c)
+
+**Icon:** 📊 Bar chart representing measurements
+
+**Contains:**
+
+- Heart Rate Range (minimum to maximum from diagnostics)
+- Percentage Paced (how often device paces vs native rhythm)
+- Battery Voltage and Impedance
+- Estimated Battery Longevity (years remaining)
+
+### ⚡ Section 5: Arrhythmia Episodes (Red Branch)
+
+**Purpose:** Documents detected rhythm disturbances
+
+**Visual indicator:** Red color (#c62828)
+
+**Icon:** ⚡ Lightning bolt representing arrhythmic events
+
+**Contains (repeating block structure for each episode):**
+
+- Episode Timestamp (device-recorded date/time)
+- Detected Rhythm classification (AF, VT, etc.)
+- Duration and Rate of episode
+- Device Response (therapy delivered or none)
+- Outcome (terminated, ongoing, patient-terminated)
+- Link to stored electrogram waveform image
+
+### 🔄 Section 6: Programming Changes (Orange Branch)
+
+**Purpose:** Tracks modifications made during interrogation
+
+**Visual indicator:** Orange color (#f57c00)
+
+**Icon:** 🔄 Circular arrows representing changes
+
+**Contains (repeating block for each change):**
+
+- Parameter Changed (which setting was modified)
+- Old Value → New Value comparison
+- Clinical Rationale (why the change was made)
+- Timestamp of programming change
+
+### 📋 Section 7: Assessment & Plan (Green Branch)
+
+**Purpose:** Clinical interpretation and follow-up planning
+
+**Visual indicator:** Green color (#2e7d32)
+
+**Icon:** 📋 Clipboard representing clinical assessment
+
+**Contains:**
+
+- Device Function Assessment (Normal/Abnormal status)
+- Key Findings (narrative summary)
+- Recommendations (clinical action items)
+- Follow-up Schedule (timing and location)
+
+### 🔗 Diagram Flow Structure
+
+**Hierarchical organization:**
+
+- **Level 1:** Main template node (navy blue header)
+- **Level 2:** Seven major sections (colored branches with distinct hues)
+- **Level 3:** Detailed content fields within each section (lighter shade boxes)
+
+**Visual design principles:**
+
+- Each section uses a unique, highly saturated color for instant recognition
+- Thick black borders (3-5px) create strong visual separation
+- White text on dark backgrounds ensures maximum readability
+- Icons provide quick visual cues for section purpose
+- Arrow connectors show parent-child relationships
+
+### 💡 Key Architecture Insights
+
+**Time-based data capture:** Most sections record measurements "at interrogation time" creating a temporal snapshot
+
+**Repeating structures:** Arrhythmia Episodes and Programming Changes use repeating blocks to handle multiple occurrences
+
+**Device-specificity:** Template adapts based on device type (pacemaker vs ICD vs CRT-D)
+
+**Multi-lead support:** Lead Information section repeats for RA, RV, LV, and CS leads as applicable
+
+**Clinical workflow:** Structure follows logical interrogation sequence from device identification → settings review → performance metrics → episode analysis → programming → assessment
+
+---
+```mermaid
+graph TD
+    A["🏥 DEVICE INTERROGATION / IMPLANT"]
+    B["📱 Device Information"]
+    C["⚙️ Current Settings&lt;br/&gt;(Snapshot at interrogation)"]
+    D["🔌 Lead Information&lt;br/&gt;(RA, RV, LV, CS)"]
+    E["📊 Measured Parameters&lt;br/&gt;(From device)"]
+    F["⚡ Arrhythmia Episodes&lt;br/&gt;(Repeating blocks)"]
+    G["🔄 Programming Changes&lt;br/&gt;(If made during encounter)"]
+    H["📋 Assessment &amp; Plan"]
+    
+    B1["Device Type, Model&lt;br/&gt;Serial Number&lt;br/&gt;Implant Date"]
+    C1["Pacing Mode&lt;br/&gt;Base Rate, AV Delay&lt;br/&gt;VV Delay, Sensor"]
+    D1["Lead Position&lt;br/&gt;Thresholds&lt;br/&gt;Impedance, Sensing"]
+    E1["HR Range, % Paced&lt;br/&gt;Battery Voltage&lt;br/&gt;Battery Longevity"]
+    F1["Timestamp, Rhythm&lt;br/&gt;Duration, Rate&lt;br/&gt;Device Response&lt;br/&gt;Electrogram Link"]
+    G1["Parameter Changed&lt;br/&gt;Old/New Values&lt;br/&gt;Clinical Rationale&lt;br/&gt;Timestamp"]
+    H1["Function Assessment&lt;br/&gt;Key Findings&lt;br/&gt;Recommendations&lt;br/&gt;Follow-up Schedule"]
+    
+    A --&gt; B
+    A --&gt; C
+    A --&gt; D
+    A --&gt; E
+    A --&gt; F
+    A --&gt; G
+    A --&gt; H
+    
+    B --&gt; B1
+    C --&gt; C1
+    D --&gt; D1
+    E --&gt; E1
+    F --&gt; F1
+    G --&gt; G1
+    H --&gt; H1
+    
+    style A fill:#1a237e,stroke:#000,stroke-width:5px,color:#ffffff,font-size:16px
+    style B fill:#0277bd,stroke:#000,stroke-width:4px,color:#ffffff,font-size:14px
+    style C fill:#d84315,stroke:#000,stroke-width:4px,color:#ffffff,font-size:14px
+    style D fill:#7b1fa2,stroke:#000,stroke-width:4px,color:#ffffff,font-size:14px
+    style E fill:#00695c,stroke:#000,stroke-width:4px,color:#ffffff,font-size:14px
+    style F fill:#c62828,stroke:#000,stroke-width:4px,color:#ffffff,font-size:14px
+    style G fill:#f57c00,stroke:#000,stroke-width:4px,color:#ffffff,font-size:14px
+    style H fill:#2e7d32,stroke:#000,stroke-width:4px,color:#ffffff,font-size:14px
+    
+    style B1 fill:#0288d1,stroke:#000,stroke-width:3px,color:#ffffff
+    style C1 fill:#e64a19,stroke:#000,stroke-width:3px,color:#ffffff
+    style D1 fill:#8e24aa,stroke:#000,stroke-width:3px,color:#ffffff
+    style E1 fill:#00897b,stroke:#000,stroke-width:3px,color:#ffffff
+    style F1 fill:#d32f2f,stroke:#000,stroke-width:3px,color:#ffffff
+    style G1 fill:#fb8c00,stroke:#000,stroke-width:3px,color:#ffffff
+    style H1 fill:#388e3c,stroke:#000,stroke-width:3px,color:#ffffff
+
+
+
+```
